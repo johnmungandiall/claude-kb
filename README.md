@@ -8,12 +8,30 @@ notes under `kb/` — a *map* of the codebase — then wires your `CLAUDE.md` to
 that map first. Future sessions orient from the KB instead of re-reading every
 file, so each task starts cheaper.
 
+## Why it's faster & cheaper
+
+The KB is mainly a **token saver**, and that makes sessions **faster** as a side
+effect:
+
+- **Smaller context → quicker responses.** Claude reads a few tiny `kb/` notes
+  instead of scanning many files, so there's far less to process before it
+  starts answering.
+- **Fewer round-trips.** The KB is a *map*, so Claude jumps straight to the right
+  `path:line` instead of searching and re-reading. Fewer tool calls = less
+  waiting.
+- **Lower cost per task.** Fewer input tokens on every session.
+
+It doesn't change Claude's raw generation speed — the win comes from giving it
+*less to read and less to hunt for*. The benefit grows with codebase size, and
+only holds while the KB stays accurate (which is why it's
+[self-maintaining](#self-maintaining)).
+
 ## What's in this repo
 
 | File | Purpose |
 |------|---------|
 | [prompt.md](prompt.md) | The prompt to give Claude Code. |
-| [LICENSE](LICENSE) | AGPL-3.0. |
+| [LICENSE](LICENSE) | MIT. |
 
 ## Usage
 
@@ -34,13 +52,17 @@ Tip: drop `prompt.md` into the project and reference it instead of pasting:
 > use the instructions in prompt.md to build/refresh the KB for this repo
 ```
 
-## Re-running (incremental updates)
+## Self-maintaining
 
-The prompt is built to be re-run. On a second pass Claude Code updates **only**
-the KB sections whose underlying code changed and leaves the rest untouched, so
-the KB stays in sync as the project evolves. Re-run it after notable changes, or
-ask Claude Code to refresh the affected `kb/` file in the same session it edits
-code.
+The wiring added to `CLAUDE.md` makes the KB **auto-update**: once it's in place,
+whenever Claude Code adds, changes, renames, or deletes code in the repo it must
+refresh the affected `kb/` note(s) in the **same session** — keeping code and KB
+in sync without you asking. New major features get their own
+`kb/features/<name>.md`, and `kb/overview.md`'s "last indexed" marker is bumped.
+
+You can still re-run [prompt.md](prompt.md) manually any time for a full pass; it
+updates **only** the sections whose underlying code changed and leaves the rest
+untouched.
 
 ## Design principles
 
@@ -55,4 +77,4 @@ code.
 
 ## License
 
-[AGPL-3.0](LICENSE).
+[MIT](LICENSE) — use it freely; just keep the copyright notice.

@@ -4,7 +4,9 @@ future AI sessions understand and navigate the codebase WITHOUT reading every fi
 
 # GOAL
 Create/update a small tree of Markdown notes under `kb/` that act as a MAP of the
-project, AND wire the project's `CLAUDE.md` to use that KB. The KB must save tokens:
+project, AND wire the project's `CLAUDE.md` so the KB is SELF-MAINTAINING: once
+wired, every future code change automatically refreshes the affected `kb/` notes
+in the same session — the KB never goes stale. The KB must save tokens:
 summarize, never copy code. Point to `path:line` instead of pasting code.
 
 # STEPS
@@ -23,15 +25,23 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    ```
    ## Knowledge Base (read FIRST — saves tokens)
    This repo has a compact KB in `kb/`. Before any task, read the relevant `kb/`
-   files to orient instead of scanning the whole codebase. After changing code,
-   update the affected `kb/` file(s) in the SAME session. Map of the KB:
+   files to orient instead of scanning the whole codebase.
+
+   AUTO-MAINTAIN (mandatory): whenever you add, change, move, rename, or delete
+   code/config in this repo, you MUST update the affected `kb/` note(s) in the
+   SAME session, BEFORE ending your turn — treat it as part of "done", not
+   optional. Touch only the notes whose underlying code changed; leave the rest.
+   New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
+   marker in `kb/overview.md`. Never let code and KB drift apart.
+
+   Map of the KB:
    - kb/overview.md — <1-line>
    - kb/architecture.md — <1-line>
    - kb/features/ — <list feature notes>
    - kb/conventions.md, kb/glossary.md
    ```
    Fill the 1-line summaries from the actual files. Do not duplicate KB content into
-   CLAUDE.md — link to it. Keep this section under 15 lines.
+   CLAUDE.md — link to it. Keep this section tight.
 
 # RULES — keep it SMALL, DYNAMIC, ADVANCED
 - Each KB file ≤ 50 lines. Dense bullets and tables only. No prose padding. No full code dumps.
