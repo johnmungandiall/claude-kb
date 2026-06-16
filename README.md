@@ -1,68 +1,58 @@
 # claude-kb
 
-A single prompt that cuts [Claude Code](https://claude.com/claude-code) token usage by giving the AI
-a compact **knowledge base** (`kb/`) — a map of your codebase that summarizes and links to
-`path:line` instead of making Claude read every file.
+A single, reusable prompt for **Claude Code** that turns it into a
+**token-saving knowledge-base builder** for your project.
 
-## Use it
+Run it once and Claude Code scans your repo and writes a compact tree of Markdown
+notes under `kb/` — a *map* of the codebase — then wires your `CLAUDE.md` to read
+that map first. Future sessions orient from the KB instead of re-reading every
+file, so each task starts cheaper.
 
-Paste the prompt below into Claude Code in your project. Or save it as
-`.claude/commands/kb-index.md` and run `/kb-index`. Run it once; it also wires your `CLAUDE.md` so
-future sessions read `kb/` first.
+## What's in this repo
 
-## The prompt
+| File | Purpose |
+|------|---------|
+| [prompt.md](prompt.md) | The prompt to give Claude Code. |
+| [LICENSE](LICENSE) | AGPL-3.0. |
 
-```markdown
-# ROLE
-You maintain a COMPACT, token-efficient knowledge base (KB) for THIS project so
-future AI sessions understand and navigate the codebase WITHOUT reading every file.
+## Usage
 
-# GOAL
-Create/update a small tree of Markdown notes under `kb/` that act as a MAP of the
-project, AND wire the project's `CLAUDE.md` to use that KB. The KB must save tokens:
-summarize, never copy code. Point to `path:line` instead of pasting code.
+1. Open the project you want indexed in Claude Code.
+2. Paste the full contents of [prompt.md](prompt.md) as your instruction.
+3. Claude Code scans the repo and produces:
+   - `kb/overview.md` — what it does, stack, entry point, how to run, last-indexed marker
+   - `kb/architecture.md` — module map + data flow
+   - `kb/features/<name>.md` — one tiny note per major feature
+   - `kb/conventions.md` — naming, folder rules, patterns
+   - `kb/glossary.md` — domain terms
+   - a `## Knowledge Base` section added to your repo's `CLAUDE.md` that points
+     at the KB (existing `CLAUDE.md` content is preserved).
 
-# STEPS
-1. Scan the repo: entry points, folder structure, config, dependencies, build/run.
-2. Identify: architecture, main features/modules, key files + their responsibility,
-   data models, state management, routing/navigation, external APIs/services,
-   conventions, gotchas.
-3. Write the KB as a TREE of tiny files:
-   - `kb/overview.md`      — what it does, tech stack, entry point, how to run, "last indexed: <date/commit>"
-   - `kb/architecture.md`  — module map + data flow (how pieces connect)
-   - `kb/features/<name>.md`— one per major feature: purpose, key files as `path:line`, key functions
-   - `kb/conventions.md`   — naming, folder rules, patterns used
-   - `kb/glossary.md`      — domain/business terms
-4. Update `CLAUDE.md` at the repo root (create it if missing). PRESERVE all existing
-   content — only add/refresh a section named exactly `## Knowledge Base` containing:
-   ```
-   ## Knowledge Base (read FIRST — saves tokens)
-   This repo has a compact KB in `kb/`. Before any task, read the relevant `kb/`
-   files to orient instead of scanning the whole codebase. After changing code,
-   update the affected `kb/` file(s) in the SAME session. Map of the KB:
-   - kb/overview.md — <1-line>
-   - kb/architecture.md — <1-line>
-   - kb/features/ — <list feature notes>
-   - kb/conventions.md, kb/glossary.md
-   ```
-   Fill the 1-line summaries from the actual files. Do not duplicate KB content into
-   CLAUDE.md — link to it. Keep this section under 15 lines.
+Tip: drop `prompt.md` into the project and reference it instead of pasting:
 
-# RULES — keep it SMALL, DYNAMIC, ADVANCED
-- Each KB file ≤ 50 lines. Dense bullets and tables only. No prose padding. No full code dumps.
-- Reference code as `lib/auth/login_service.dart:42`, NOT by pasting it.
-- Capture only what a filename does NOT reveal — the "why" and the wiring between parts.
-- Keep a STABLE structure so it can be regenerated incrementally: on re-run, update
-  ONLY the sections whose underlying code changed; leave the rest untouched.
-- One fact per place; link related notes with `[[other-note]]`.
-- Optimize for retrieval: start each file with a one-line summary of its contents.
-- CLAUDE.md stays a POINTER to `kb/`, never a copy of it (keeps every session cheap).
-
-# OUTPUT
-Create/update the files under `kb/`, update the `## Knowledge Base` section in
-`CLAUDE.md`, then print a short list of what changed.
 ```
+> use the instructions in prompt.md to build/refresh the KB for this repo
+```
+
+## Re-running (incremental updates)
+
+The prompt is built to be re-run. On a second pass Claude Code updates **only**
+the KB sections whose underlying code changed and leaves the rest untouched, so
+the KB stays in sync as the project evolves. Re-run it after notable changes, or
+ask Claude Code to refresh the affected `kb/` file in the same session it edits
+code.
+
+## Design principles
+
+- **Summarize, never copy.** Notes reference code as `path/to/file.ext:42`, not
+  by pasting it.
+- **Small and dense.** Each KB file is ≤ 50 lines — bullets and tables, no prose
+  padding.
+- **Capture the *why*.** Only what a filename doesn't already reveal: intent and
+  the wiring between parts.
+- **`CLAUDE.md` stays a pointer**, never a copy of the KB — that's what keeps
+  every session cheap.
 
 ## License
 
-[AGPL-3.0-only](LICENSE).
+[AGPL-3.0](LICENSE).
