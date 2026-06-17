@@ -17,6 +17,9 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    code/config in this repo, you MUST update the affected `kb/` note(s) in the
    SAME session, BEFORE ending your turn — treat it as part of "done", not
    optional. Touch only the notes whose underlying code changed; leave the rest.
+   Edit the `kb/` FILES, not this CLAUDE.md — CLAUDE.md stays a stable pointer.
+   Change the KB map below ONLY when you add or remove a `kb/` file, and then
+   only that one line; routine code fixes must NOT modify CLAUDE.md.
    New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
    marker in `kb/overview.md`. Never let code and KB drift apart.
 
