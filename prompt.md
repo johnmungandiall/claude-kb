@@ -44,6 +44,13 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
    marker in `kb/overview.md`. Never let code and KB drift apart.
 
+   SUB-AGENTS & SKILLS: the KB is the shared map for EVERY agent, not just this
+   session. When you dispatch a sub-agent (Task/Agent) or run a skill/workflow
+   that reads or edits code, pass the same rule in its instructions — read the
+   relevant `kb/` notes FIRST to orient, and update them in the SAME session
+   after changing code. A sub-agent starts cold, so it won't use the KB unless
+   you tell it to.
+
    Map of the KB:
    - kb/overview.md — <1-line>
    - kb/architecture.md — <1-line>
