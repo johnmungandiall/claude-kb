@@ -31,12 +31,18 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    imports/calls to trace real data flow. Filenames and assumptions are NOT enough
    — open and read the file before you describe it. Writing KB notes from guesses
    instead of read code is the #1 failure; refuse to do it.
+   Cover the WHOLE repo, not just one app: detect every sub-project / monorepo
+   package (e.g. `apps/`, `packages/`, `services/`, or nested `package.json` /
+   `pyproject.toml` / `go.mod` / `*.csproj` / `pubspec.yaml`) and treat each as
+   its own area. Don't ignore non-code files that matter — config, env, CI/CD,
+   Docker/k8s/IaC, build scripts, DB schemas/migrations, and docs.
 2. From what you ACTUALLY READ (never assumed), identify: architecture, main
    features/modules, key files + their responsibility, data models, state
    management, routing/navigation, external APIs/services, conventions, gotchas.
 3. Write the KB as a TREE of tiny files:
    - `kb/overview.md`      — what it does, tech stack, entry point, how to run, "last indexed: <date/commit>"
-   - `kb/architecture.md`  — module map + data flow (how pieces connect)
+   - `kb/architecture.md`  — module map + data flow; for monorepos, how sub-projects connect
+   - `kb/subprojects/<name>.md`— one per sub-project/package: purpose, stack, entry point, how it wires to the rest (omit if single-project repo)
    - `kb/features/<name>.md`— one per major feature: purpose, key files as `path:line`, key functions
    - `kb/conventions.md`   — naming, folder rules, patterns used
    - `kb/glossary.md`      — domain/business terms
@@ -57,6 +63,7 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    Map of the KB:
    - kb/overview.md — <1-line>
    - kb/architecture.md — <1-line>
+   - kb/subprojects/ — <list sub-projects, if any>
    - kb/features/ — <list feature notes>
    - kb/conventions.md, kb/glossary.md
    ```
