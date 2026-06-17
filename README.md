@@ -69,10 +69,14 @@ in the same session — the KB never goes stale. The KB must save tokens:
 summarize, never copy code. Point to `path:line` instead of pasting code.
 
 # STEPS
-1. Scan the repo: entry points, folder structure, config, dependencies, build/run.
-2. Identify: architecture, main features/modules, key files + their responsibility,
-   data models, state management, routing/navigation, external APIs/services,
-   conventions, gotchas.
+1. INVESTIGATE the code — do NOT skim. Read the entry points, config, and the key
+   source files closely enough to understand what actually runs and how. Follow
+   imports/calls to trace real data flow. Filenames and assumptions are NOT enough
+   — open and read the file before you describe it. Writing KB notes from guesses
+   instead of read code is the #1 failure; refuse to do it.
+2. From what you ACTUALLY READ (never assumed), identify: architecture, main
+   features/modules, key files + their responsibility, data models, state
+   management, routing/navigation, external APIs/services, conventions, gotchas.
 3. Write the KB as a TREE of tiny files:
    - `kb/overview.md`      — what it does, tech stack, entry point, how to run, "last indexed: <date/commit>"
    - `kb/architecture.md`  — module map + data flow (how pieces connect)
@@ -103,6 +107,10 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    CLAUDE.md — link to it. Keep this section tight.
 
 # RULES — keep it SMALL, DYNAMIC, ADVANCED
+- ACCURACY over speed: every claim and every `path:line` must come from code you
+  actually OPENED and verified this session — never from filenames or guesses.
+  If you haven't read it, don't write it; go read it. Never invent files,
+  functions, or line numbers. Verify a line number by looking at that line.
 - Each KB file ≤ 50 lines. Dense bullets and tables only. No prose padding. No full code dumps.
 - Reference code as `lib/auth/login_service.dart:42`, NOT by pasting it.
 - Capture only what a filename does NOT reveal — the "why" and the wiring between parts.
