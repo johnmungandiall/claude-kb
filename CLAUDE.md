@@ -20,7 +20,8 @@ Edit the `kb/` FILES, not this CLAUDE.md — CLAUDE.md stays a stable pointer.
 Change the KB map below ONLY when you add or remove a `kb/` file, and then
 only that one line; routine code fixes must NOT modify CLAUDE.md.
 New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
-marker in `kb/overview.md`. Never let code and KB drift apart.
+marker in `kb/overview.md`. Never let code and KB drift apart. Append a dated
+one-line entry to `kb/changelog.md` for notable changes.
 
 SUB-AGENTS & SKILLS: the KB is the shared map for EVERY agent, not just this
 session. When you dispatch a sub-agent (Task/Agent) or run a skill/workflow
@@ -37,13 +38,16 @@ corrects a durable preference, goal, or rule, update `kb/about-you.md` in
 the SAME session. Tag each item [confirmed] (user said/approved it) or
 [inferred] (your guess); promote [inferred] → [confirmed] only when the
 user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+Repo-specific prefs live here; prefs that apply across ALL the user's projects,
+also persist to the host's long-term memory (e.g. Claude Code memory) when available.
 
 Map of the KB:
 - kb/overview.md — what claude-kb is, entry points, how to use
 - kb/architecture.md — repo layout and target-project KB data flow
 - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
-- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade)
+- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit)
 - kb/conventions.md, kb/glossary.md
+- kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — repo traps, KB history, command cheatsheet
 
 ## Editing the prompts (keep README in sync)
 
