@@ -43,6 +43,8 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    the SAME session. Tag each item [confirmed] (user said/approved it) or
    [inferred] (your guess); promote [inferred] → [confirmed] only when the
    user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+   Repo-specific prefs live here; prefs that apply across ALL the user's projects,
+   also persist to the host's long-term memory (e.g. Claude Code memory) when available.
 
    Map of the KB:
    - kb/overview.md — <keep existing 1-line>

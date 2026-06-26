@@ -25,7 +25,7 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    management, routing/navigation, external APIs/services, conventions, gotchas.
 3. Write the KB as a TREE of tiny files:
    - `kb/overview.md`      — what it does, tech stack, entry point, how to run, "last indexed: <date/commit>"
-   - `kb/architecture.md`  — module map + data flow; for monorepos, how sub-projects connect
+   - `kb/architecture.md`  — module map + data flow; for monorepos, how sub-projects connect; a tiny mermaid diagram is welcome when it clarifies
    - `kb/about-you.md`    — durable facts about the USER: working style, tech preferences, goals, standing rules; tag each [confirmed]/[inferred]
    - `kb/subprojects/<name>.md`— one per sub-project/package: purpose, stack, entry point, how it wires to the rest (omit if single-project repo)
    - `kb/features/<name>.md`— one per major feature: purpose, key files as `path:line`, key functions
@@ -68,6 +68,8 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    the SAME session. Tag each item [confirmed] (user said/approved it) or
    [inferred] (your guess); promote [inferred] → [confirmed] only when the
    user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+   Repo-specific prefs live here; prefs that apply across ALL the user's projects,
+   also persist to the host's long-term memory (e.g. Claude Code memory) when available.
 
    Map of the KB:
    - kb/overview.md — <1-line>
@@ -86,7 +88,10 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
   If you haven't read it, don't write it; go read it. Never invent files,
   functions, or line numbers. Verify a line number by looking at that line.
 - Each KB file ≤ 50 lines. Dense bullets and tables only. No prose padding. No full code dumps.
+  If a note outgrows 50 lines, SPLIT it into focused sub-notes rather than let it sprawl.
 - Reference code as `lib/auth/login_service.dart:42`, NOT by pasting it.
+- Mark volatile `path:line` refs with `(checked <date>)` so staleness is visible at a glance.
+- NEVER copy secrets/keys/tokens/PII into the KB — reference where they live, never the value.
 - Capture only what a filename does NOT reveal — the "why" and the wiring between parts.
 - Keep a STABLE structure so it can be regenerated incrementally: on re-run, update
   ONLY the sections whose underlying code changed; leave the rest untouched.
