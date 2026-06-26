@@ -56,6 +56,16 @@ flowchart LR
 | **Staying current** | You re-explain the project | Notes auto-update when code changes |
 | **Setup** | — | One paste · any language |
 
+## What's new in v2.2
+
+- **Audit for drift** — a new [verify.md](verify.md) prompt re-checks every
+  `path:line` against the code, fixes the cheap mismatches, and lists the rest.
+- **More note types** — optional `kb/gotchas.md` (traps), `kb/changelog.md` (KB
+  history), and `kb/cheatsheet.md` (one-page commands).
+- **Smarter rules** — freshness markers on volatile refs, a mermaid diagram in
+  architecture, a secret guard, an oversized-note split rule, and global user
+  prefs that persist to host memory.
+
 ## What's new in v2.1
 
 - **The KB now understands you, not just the code** — a new `kb/about-you.md`
