@@ -1,5 +1,13 @@
 # claude-kb
 
+![claude-kb — a compact, self-maintaining knowledge base for Claude Code](assets/banner.png)
+
+[![Made for Claude Code](https://img.shields.io/badge/made%20for-Claude%20Code-8A2BE2)](https://www.anthropic.com/claude-code)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+![Markdown only — no dependencies](https://img.shields.io/badge/dependencies-none-brightgreen)
+![Works with any repo](https://img.shields.io/badge/works%20with-any%20language-blue)
+[![GitHub stars](https://img.shields.io/github/stars/johnmungandiall/claude-kb?style=social)](https://github.com/johnmungandiall/claude-kb/stargazers)
+
 > Stop paying for Claude to re-learn your whole codebase every single session.
 
 A reusable **Claude Code** prompt that builds a compact, self-maintaining
@@ -11,11 +19,42 @@ the project works — slow, and it burns tokens every time.
 
 **The fix:** a tiny tree of Markdown notes (`kb/`) that maps the project — entry
 points, architecture, features, gotchas — pointing to `path:line` instead of
-pasting code. Claude reads the map, not the whole repo. And it's
-*self-maintaining*: when your code changes, the affected notes update in the same
-session, so the map never goes stale.
+pasting code. Claude reads the map, not the whole repo.
 
-One paste to set up. Works on any language or framework.
+> [!IMPORTANT]
+> **It updates itself.** Whenever you change the project — add a feature, rename
+> a file, or tweak config — Claude refreshes the affected `kb/` notes in the
+> *same* session, as part of the task. The map never drifts from the code, and
+> you never maintain it by hand.
+
+> [!TIP]
+> **One paste to set up.** No install, no dependencies — works on any language
+> or framework.
+
+## How it works
+
+```mermaid
+flowchart LR
+    A([New Claude session]) --> B{kb/ map exists?}
+    B -- no --> E[Scan the whole repo] --> F[🐌 slow · burns tokens]
+    B -- yes --> C[Read the small kb/ map] --> D[⚡ fast · fewer tokens]
+    G([You change the code]) --> H[Claude refreshes the affected<br/>notes in the same session] --> A
+    classDef bad fill:#ffe0e0,stroke:#e53935,color:#b71c1c;
+    classDef good fill:#e0f7e0,stroke:#2e7d32,color:#1b5e20;
+    classDef upd fill:#ede0ff,stroke:#7b2ff2,color:#4a148c;
+    class E,F bad;
+    class C,D good;
+    class G,H upd;
+```
+
+## Without vs with claude-kb
+
+|  | Without `kb/` | With `kb/` |
+|---|---|---|
+| **Start of each session** | Claude re-reads many files to orient | Claude reads one small map |
+| **Tokens to get oriented** | High — paid *every* session | Low — the map is read instead |
+| **Staying current** | You re-explain the project | Notes auto-update when code changes |
+| **Setup** | — | One paste · any language |
 
 ## What's new in v2.0
 
