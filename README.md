@@ -54,8 +54,13 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    content — only add/refresh a section named exactly `## Knowledge Base` containing:
    ```
    ## Knowledge Base (read FIRST — saves tokens)
-   This repo has a compact KB in `kb/`. Before any task, read the relevant `kb/`
-   files to orient instead of scanning the whole codebase.
+   MANDATORY — READ THE KB FIRST: this repo has a compact KB in `kb/`. Before ANY
+   task (answering, coding, debugging, planning) you MUST open the relevant `kb/`
+   notes to orient. This is NOT optional and NOT a fallback: do NOT grep or scan
+   the whole codebase before consulting the KB — it is the designated entry point,
+   and skipping it wastes tokens and risks missing context. If the KB lacks what
+   you need, follow its `path:line` pointers into the code, then fold the finding
+   back into the KB.
 
    AUTO-MAINTAIN (mandatory): whenever you add, change, move, rename, or delete
    code/config in this repo, you MUST update the affected `kb/` note(s) in the
@@ -124,8 +129,13 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    `kb/subprojects/` line if the repo has sub-projects.
    ```
    ## Knowledge Base (read FIRST — saves tokens)
-   This repo has a compact KB in `kb/`. Before any task, read the relevant `kb/`
-   files to orient instead of scanning the whole codebase.
+   MANDATORY — READ THE KB FIRST: this repo has a compact KB in `kb/`. Before ANY
+   task (answering, coding, debugging, planning) you MUST open the relevant `kb/`
+   notes to orient. This is NOT optional and NOT a fallback: do NOT grep or scan
+   the whole codebase before consulting the KB — it is the designated entry point,
+   and skipping it wastes tokens and risks missing context. If the KB lacks what
+   you need, follow its `path:line` pointers into the code, then fold the finding
+   back into the KB.
 
    AUTO-MAINTAIN (mandatory): whenever you add, change, move, rename, or delete
    code/config in this repo, you MUST update the affected `kb/` note(s) in the

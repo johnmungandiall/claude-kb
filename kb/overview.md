@@ -6,4 +6,5 @@
 - **How to use:** Open target project in Claude Code → paste `prompt.md` → Claude builds `kb/` and wires `CLAUDE.md`.
 - **This repo:** The prompt templates themselves (meta — not a sample app).
 - **See also:** [[architecture]] (layout + data flow), [[prompt-init]] / [[prompt-update]] (the two prompts), [[glossary]].
+- **version:** 2.0 — cross-linking (`[[other-note]]`) enforced as a first-class rule, plus a MANDATORY "read the KB FIRST" directive in the `CLAUDE.md` template.
 - **last indexed:** 2026-06-26 / verify + cross-link pass
