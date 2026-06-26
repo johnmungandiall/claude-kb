@@ -1,8 +1,21 @@
 # claude-kb
 
+> Stop paying for Claude to re-learn your whole codebase every single session.
+
 A reusable **Claude Code** prompt that builds a compact, self-maintaining
-knowledge base (`kb/`) for any repo. Future sessions read a small map instead of
-the whole codebase — **fewer tokens, faster sessions.**
+knowledge base (`kb/`) for any repo. Once set up, every future session reads a
+small map first — **fewer tokens, faster answers, no re-exploration.**
+
+**The problem:** each new session, Claude re-scans your files to figure out how
+the project works — slow, and it burns tokens every time.
+
+**The fix:** a tiny tree of Markdown notes (`kb/`) that maps the project — entry
+points, architecture, features, gotchas — pointing to `path:line` instead of
+pasting code. Claude reads the map, not the whole repo. And it's
+*self-maintaining*: when your code changes, the affected notes update in the same
+session, so the map never goes stale.
+
+One paste to set up. Works on any language or framework.
 
 ## What's new in v2.0
 
