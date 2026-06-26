@@ -35,22 +35,36 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    after changing code. A sub-agent starts cold, so it won't use the KB unless
    you tell it to.
 
+   USER UNDERSTANDING (mandatory): the KB also maps the USER, not just the
+   code. `kb/about-you.md` records durable facts about how the user wants you
+   to work — working style, tech preferences, project goals, and standing
+   rules. Read it FIRST alongside the code notes. Whenever the user states or
+   corrects a durable preference, goal, or rule, update `kb/about-you.md` in
+   the SAME session. Tag each item [confirmed] (user said/approved it) or
+   [inferred] (your guess); promote [inferred] → [confirmed] only when the
+   user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+
    Map of the KB:
    - kb/overview.md — <keep existing 1-line>
    - kb/architecture.md — <keep existing 1-line>
+   - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
    - kb/subprojects/ — <list sub-projects, if any>
    - kb/features/ — <keep existing list>
    - kb/conventions.md, kb/glossary.md
    ```
-2. If the repo has sub-projects / monorepo packages (`apps/`, `packages/`,
+2. Create `kb/about-you.md` if it is missing — a compact note (≤ 50 lines) of
+   durable facts about the USER: working style, tech preferences, project goals,
+   and standing rules, each tagged [confirmed]/[inferred]. If it already exists,
+   leave its content untouched. Ensure its line is in the KB map above.
+3. If the repo has sub-projects / monorepo packages (`apps/`, `packages/`,
    `services/`, or nested `package.json` / `pyproject.toml` / `go.mod` /
    `*.csproj` / `pubspec.yaml`) and `kb/subprojects/` is missing, READ each one
    and add a tiny `kb/subprojects/<name>.md` (purpose, stack, entry point, how it
    wires to the rest). Leave unrelated notes untouched.
-3. Add missing `[[other-note]]` cross-links: older setups were generated without
+4. Add missing `[[other-note]]` cross-links: older setups were generated without
    them, so scan each `kb/` note and link it to its related notes (e.g. a feature
    note → `[[conventions]]`, `[[glossary]]`). Add only links; don't rewrite content.
-4. Bump the "last indexed" marker in `kb/overview.md`.
+5. Bump the "last indexed" marker in `kb/overview.md`.
 
 # RULES
 - Incremental ONLY: do not regenerate unchanged KB files.
