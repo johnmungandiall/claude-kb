@@ -34,3 +34,10 @@ Map of the KB:
 - kb/architecture.md — repo layout and target-project KB data flow
 - kb/features/ — prompt-init (bootstrap), prompt-update (upgrade)
 - kb/conventions.md, kb/glossary.md
+
+## Editing the prompts (keep README in sync)
+
+`README.md` embeds the FULL text of `prompt.md` and `update.md` in fenced
+blocks (README.md:82, README.md:181). If you edit either prompt file, mirror
+the same change into the matching README block in the SAME session, or the two
+copies silently drift. See `kb/conventions.md` for the note-writing rules.
