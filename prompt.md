@@ -31,6 +31,9 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    - `kb/features/<name>.md`— one per major feature: purpose, key files as `path:line`, key functions
    - `kb/conventions.md`   — naming, folder rules, patterns used
    - `kb/glossary.md`      — domain/business terms
+   - `kb/gotchas.md`       — known traps / footguns / "do NOT do X" (only if any exist)
+   - `kb/changelog.md`     — dated one-line history of notable KB changes
+   - `kb/cheatsheet.md`    — one-page run/build/test commands + key entry points
 4. Update `CLAUDE.md` at the repo root (create it if missing). PRESERVE all existing
    content — only add/refresh a section named exactly `## Knowledge Base` containing:
    ```
@@ -51,7 +54,8 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    Change the KB map below ONLY when you add or remove a `kb/` file, and then
    only that one line; routine code fixes must NOT modify CLAUDE.md.
    New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
-   marker in `kb/overview.md`. Never let code and KB drift apart.
+   marker in `kb/overview.md`. Never let code and KB drift apart. Append a dated
+   one-line entry to `kb/changelog.md` for notable changes.
 
    SUB-AGENTS & SKILLS: the KB is the shared map for EVERY agent, not just this
    session. When you dispatch a sub-agent (Task/Agent) or run a skill/workflow
@@ -78,6 +82,7 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    - kb/subprojects/ — <list sub-projects, if any>
    - kb/features/ — <list feature notes>
    - kb/conventions.md, kb/glossary.md
+   - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — traps, KB history, command cheatsheet (optional)
    ```
    Fill the 1-line summaries from the actual files. Do not duplicate KB content into
    CLAUDE.md — link to it. Keep this section tight.
