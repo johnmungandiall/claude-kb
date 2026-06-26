@@ -74,7 +74,9 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
 - Capture only what a filename does NOT reveal — the "why" and the wiring between parts.
 - Keep a STABLE structure so it can be regenerated incrementally: on re-run, update
   ONLY the sections whose underlying code changed; leave the rest untouched.
-- One fact per place; link related notes with `[[other-note]]`.
+- One fact per place. CROSS-LINK every note to its related notes with `[[other-note]]`
+  (e.g. a feature note links its `[[conventions]]` and `[[glossary]]`). A note with NO
+  links is incomplete — the KB must be a navigable web, not a pile of isolated files.
 - Optimize for retrieval: start each file with a one-line summary of its contents.
 - CLAUDE.md stays a POINTER to `kb/`, never a copy of it (keeps every session cheap).
 

@@ -42,11 +42,15 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    `*.csproj` / `pubspec.yaml`) and `kb/subprojects/` is missing, READ each one
    and add a tiny `kb/subprojects/<name>.md` (purpose, stack, entry point, how it
    wires to the rest). Leave unrelated notes untouched.
-3. Bump the "last indexed" marker in `kb/overview.md`.
+3. Add missing `[[other-note]]` cross-links: older setups were generated without
+   them, so scan each `kb/` note and link it to its related notes (e.g. a feature
+   note → `[[conventions]]`, `[[glossary]]`). Add only links; don't rewrite content.
+4. Bump the "last indexed" marker in `kb/overview.md`.
 
 # RULES
 - Incremental ONLY: do not regenerate unchanged KB files.
 - Every `path:line` you add must come from code you actually OPENED — no guesses.
+- Cross-link related notes with `[[other-note]]`; a note with no links is incomplete.
 - Keep the `## Knowledge Base` section tight.
 
 # OUTPUT

@@ -94,7 +94,9 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
 - Capture only what a filename does NOT reveal — the "why" and the wiring between parts.
 - Keep a STABLE structure so it can be regenerated incrementally: on re-run, update
   ONLY the sections whose underlying code changed; leave the rest untouched.
-- One fact per place; link related notes with `[[other-note]]`.
+- One fact per place. CROSS-LINK every note to its related notes with `[[other-note]]`
+  (e.g. a feature note links its `[[conventions]]` and `[[glossary]]`). A note with NO
+  links is incomplete — the KB must be a navigable web, not a pile of isolated files.
 - Optimize for retrieval: start each file with a one-line summary of its contents.
 - CLAUDE.md stays a POINTER to `kb/`, never a copy of it (keeps every session cheap).
 
@@ -154,11 +156,15 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    `*.csproj` / `pubspec.yaml`) and `kb/subprojects/` is missing, READ each one
    and add a tiny `kb/subprojects/<name>.md` (purpose, stack, entry point, how it
    wires to the rest). Leave unrelated notes untouched.
-3. Bump the "last indexed" marker in `kb/overview.md`.
+3. Add missing `[[other-note]]` cross-links: older setups were generated without
+   them, so scan each `kb/` note and link it to its related notes (e.g. a feature
+   note → `[[conventions]]`, `[[glossary]]`). Add only links; don't rewrite content.
+4. Bump the "last indexed" marker in `kb/overview.md`.
 
 # RULES
 - Incremental ONLY: do not regenerate unchanged KB files.
 - Every `path:line` you add must come from code you actually OPENED — no guesses.
+- Cross-link related notes with `[[other-note]]`; a note with no links is incomplete.
 - Keep the `## Knowledge Base` section tight.
 
 # OUTPUT
