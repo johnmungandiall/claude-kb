@@ -26,6 +26,7 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
 3. Write the KB as a TREE of tiny files:
    - `kb/overview.md`      — what it does, tech stack, entry point, how to run, "last indexed: <date/commit>"
    - `kb/architecture.md`  — module map + data flow; for monorepos, how sub-projects connect
+   - `kb/about-you.md`    — durable facts about the USER: working style, tech preferences, goals, standing rules; tag each [confirmed]/[inferred]
    - `kb/subprojects/<name>.md`— one per sub-project/package: purpose, stack, entry point, how it wires to the rest (omit if single-project repo)
    - `kb/features/<name>.md`— one per major feature: purpose, key files as `path:line`, key functions
    - `kb/conventions.md`   — naming, folder rules, patterns used
@@ -59,9 +60,19 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    after changing code. A sub-agent starts cold, so it won't use the KB unless
    you tell it to.
 
+   USER UNDERSTANDING (mandatory): the KB also maps the USER, not just the
+   code. `kb/about-you.md` records durable facts about how the user wants you
+   to work — working style, tech preferences, project goals, and standing
+   rules. Read it FIRST alongside the code notes. Whenever the user states or
+   corrects a durable preference, goal, or rule, update `kb/about-you.md` in
+   the SAME session. Tag each item [confirmed] (user said/approved it) or
+   [inferred] (your guess); promote [inferred] → [confirmed] only when the
+   user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+
    Map of the KB:
    - kb/overview.md — <1-line>
    - kb/architecture.md — <1-line>
+   - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
    - kb/subprojects/ — <list sub-projects, if any>
    - kb/features/ — <list feature notes>
    - kb/conventions.md, kb/glossary.md
