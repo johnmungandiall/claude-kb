@@ -47,7 +47,9 @@ Map of the KB:
 
 ## Editing the prompts (keep README in sync)
 
-`README.md` embeds the FULL text of `prompt.md` and `update.md` in fenced
-blocks (README.md:82, README.md:181). If you edit either prompt file, mirror
-the same change into the matching README block in the SAME session, or the two
-copies silently drift. See `kb/conventions.md` for the note-writing rules.
+`README.md` embeds the FULL text of `prompt.md`, `update.md`, and `verify.md` in
+fenced (````markdown) blocks. If you edit any prompt file, mirror the same change
+into its matching README block in the SAME session, or the copies silently drift.
+Verify with the diff gate (extract each fenced block, `diff` it against the
+standalone file — they must be byte-identical). See `kb/conventions.md` for the
+note-writing rules.

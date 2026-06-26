@@ -4,7 +4,8 @@
 
 - **`prompt.md`** — full init; use on projects with no KB yet.
 - **`update.md`** — delta upgrade; use when KB already exists.
-- **`README.md`** — duplicates both prompts in fenced blocks for GitHub browsing; keep in sync with standalone files.
+- **`verify.md`** — audit existing KB for drift vs code; fix cheap, report rest. See [[prompt-verify]].
+- **`README.md`** — duplicates all three prompts in fenced blocks for GitHub browsing; keep byte-identical to the standalone files.
 
 ## KB note rules (enforced in prompts)
 
