@@ -10,7 +10,9 @@
   the SAME edit. This is why `verify.md` exists.
 - **Unicode matters.** Files use `—` (em dash), `→`, `≤`. Preserve them as UTF-8;
   don't let an editor mangle them.
-- **Two embedded copies of the USER/AUTO-MAINTAIN blocks** live in README (init +
-  update). A shared-line edit needs `replace_all` or both will diverge.
+- **Embedded prompt copies in README.** The lean `## Knowledge Base` block and the
+  `kb/about-kb.md` template each live in `prompt.md` AND `update.md`, mirrored again
+  in README — the about-kb template is byte-identical across all four. A shared-line
+  edit needs `replace_all` (or matching edits) or the copies diverge.
 
 See [[conventions]] for the rules, [[overview]] for the big picture.

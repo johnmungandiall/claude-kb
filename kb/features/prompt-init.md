@@ -7,19 +7,19 @@
 
 | Lines | Section | Does |
 |-------|---------|------|
-| `1-11` | ROLE / GOAL | Compact map under `kb/`; self-maintaining via `CLAUDE.md` |
+| `1-10` | ROLE / GOAL | Compact map under `kb/`; self-maintaining via `CLAUDE.md` |
 | `13-22` | STEPS §1 | Deep read — no guesses; whole repo incl. monorepo + infra |
 | `23-25` | STEPS §2 | Extract architecture, features, models, APIs, gotchas |
-| `26-36` | STEPS §3 | KB file tree to create (incl. about-you/gotchas/changelog/cheatsheet) |
-| `37-89` | STEPS §4 | `## Knowledge Base` block for target `CLAUDE.md` |
-| `90-108` | RULES | ≤50 lines/file (split if bigger), `path:line` + `(checked <date>)`, `[[cross-link]]`, no secrets |
-| `109-110` | OUTPUT | List what changed |
+| `26-37` | STEPS §3 | KB file tree to create (incl. about-you/about-kb/gotchas/changelog/cheatsheet) |
+| `38-77` | STEPS §4 | Create `kb/about-kb.md` — the FULL KB-maintenance rules template |
+| `78-109` | STEPS §5 | LEAN `## Knowledge Base` block for target `CLAUDE.md` (triggers + map + pointer) |
+| `111-129` | RULES | ≤50 lines/file (split if bigger), `path:line` + `(checked <date>)`, `[[cross-link]]`, no secrets, lean CLAUDE.md |
+| `131-133` | OUTPUT | List what changed |
 
 ## CLAUDE.md wiring (target)
 
-- Section title exactly `## Knowledge Base` — see template at `prompt.md:39-86`.
-- Opens with a MANDATORY "read the KB FIRST" directive — KB is the designated entry point, not optional.
-- AUTO-MAINTAIN: update affected `kb/` notes same session as code edits.
-- SUB-AGENTS & SKILLS: pass KB read/update rules to dispatched agents.
+- Section title exactly `## Knowledge Base` — LEAN template at `prompt.md:82-107`.
+- Holds only short TRIGGERS (read-first; after-change → update `kb/`; user-pref → `about-you`; sub-agents) + the KB map + a pointer.
+- The FULL rules (auto-maintain, sub-agents, user-map) live in `kb/about-kb.md`, loaded on demand — NOT inlined in `CLAUDE.md`, so every session stays cheap.
 
 See [[prompt-update]] for the incremental upgrade path; [[conventions]] for note rules.

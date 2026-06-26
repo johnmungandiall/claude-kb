@@ -4,51 +4,70 @@ A `kb/` tree and a `## Knowledge Base` section in `CLAUDE.md` already exist — 
 NOT rebuild them from scratch. Make ONLY the incremental changes below.
 
 # WHAT TO DO
-1. Open `CLAUDE.md`, find the `## Knowledge Base` section, and PRESERVE everything
-   else. Replace ONLY that section's body with the latest version below. Re-use
-   the existing 1-line KB map summaries — don't regenerate them — and add a
-   `kb/subprojects/` line if the repo has sub-projects.
+1. Create `kb/about-kb.md` if missing — the FULL KB rules, MOVED out of `CLAUDE.md`
+   so the detail loads on demand, not every session. If it already exists, leave it:
+   ```
+   # About the KB — full rules for maintaining this knowledge base.
+
+   Read this before you maintain the KB, edit notes, or dispatch a sub-agent.
+   `CLAUDE.md` holds only the short triggers; the detail lives here.
+
+   ## Read first
+   - Before ANY task, open the relevant `kb/` notes to orient — don't grep/scan the
+     whole repo first; the KB is the designated entry point, not a fallback.
+   - If the KB lacks what you need, follow its `path:line` pointers into the code,
+     then fold the finding back into the KB.
+
+   ## Auto-maintain (mandatory)
+   - Whenever you add, change, move, rename, or delete code/config, update the
+     affected `kb/` note(s) in the SAME session, before ending your turn — part of
+     "done", not optional. Touch only the notes whose underlying code changed.
+   - New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
+     marker in `kb/overview.md`. Append a dated one-line entry to `kb/changelog.md`.
+   - Edit the `kb/` FILES, not `CLAUDE.md` — it stays a stable pointer. Change the KB
+     map in `CLAUDE.md` ONLY when a `kb/` file is added or removed.
+
+   ## Sub-agents & skills
+   - A dispatched sub-agent (Task/Agent) or skill/workflow starts cold. Pass it the
+     same rules: read the relevant `kb/` notes FIRST, and update them in the SAME
+     session after changing code.
+
+   ## User map
+   - `kb/about-you.md` records durable facts about how the user wants you to work —
+     working style, tech preferences, goals, standing rules.
+   - When the user states or corrects a durable preference, goal, or rule, update
+     `kb/about-you.md` the SAME session. Tag each item [confirmed]/[inferred];
+     promote [inferred] → [confirmed] only on confirmation.
+   - Capture lasting habits, not one-off chatter; never store secrets. Prefs that
+     apply across ALL the user's projects → also persist to host long-term memory
+     (e.g. Claude Code memory) when available.
+
+   See [[conventions]] for note-writing rules, [[overview]] for the big picture.
+   ```
+2. Open `CLAUDE.md`, find the `## Knowledge Base` section, and PRESERVE everything
+   else. Replace ONLY that section's body with the LEAN version below — short
+   triggers + map + a pointer to `kb/about-kb.md` (the old verbose rules now live
+   there). Re-use the existing 1-line KB map summaries; add a `kb/subprojects/`
+   line if the repo has sub-projects.
    ```
    ## Knowledge Base (read FIRST — saves tokens)
-   MANDATORY — READ THE KB FIRST: this repo has a compact KB in `kb/`. Before ANY
-   task (answering, coding, debugging, planning) you MUST open the relevant `kb/`
-   notes to orient. This is NOT optional and NOT a fallback: do NOT grep or scan
-   the whole codebase before consulting the KB — it is the designated entry point,
-   and skipping it wastes tokens and risks missing context. If the KB lacks what
-   you need, follow its `path:line` pointers into the code, then fold the finding
-   back into the KB.
+   This repo keeps a compact KB in `kb/`. The FULL KB rules (how to maintain it,
+   sub-agents, user-map) live in `kb/about-kb.md` — read it before you maintain the
+   KB, edit notes, or dispatch a sub-agent.
 
-   AUTO-MAINTAIN (mandatory): whenever you add, change, move, rename, or delete
-   code/config in this repo, you MUST update the affected `kb/` note(s) in the
-   SAME session, BEFORE ending your turn — treat it as part of "done", not
-   optional. Touch only the notes whose underlying code changed; leave the rest.
-   Edit the `kb/` FILES, not this CLAUDE.md — CLAUDE.md stays a stable pointer.
-   Change the KB map below ONLY when you add or remove a `kb/` file, and then
-   only that one line; routine code fixes must NOT modify CLAUDE.md.
-   New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
-   marker in `kb/overview.md`. Never let code and KB drift apart. Append a dated
-   one-line entry to `kb/changelog.md` for notable changes.
-
-   SUB-AGENTS & SKILLS: the KB is the shared map for EVERY agent, not just this
-   session. When you dispatch a sub-agent (Task/Agent) or run a skill/workflow
-   that reads or edits code, pass the same rule in its instructions — read the
-   relevant `kb/` notes FIRST to orient, and update them in the SAME session
-   after changing code. A sub-agent starts cold, so it won't use the KB unless
-   you tell it to.
-
-   USER UNDERSTANDING (mandatory): the KB also maps the USER, not just the
-   code. `kb/about-you.md` records durable facts about how the user wants you
-   to work — working style, tech preferences, project goals, and standing
-   rules. Read it FIRST alongside the code notes. Whenever the user states or
-   corrects a durable preference, goal, or rule, update `kb/about-you.md` in
-   the SAME session. Tag each item [confirmed] (user said/approved it) or
-   [inferred] (your guess); promote [inferred] → [confirmed] only when the
-   user confirms. Capture lasting habits, not one-off chatter; never store secrets.
-   Repo-specific prefs live here; prefs that apply across ALL the user's projects,
-   also persist to the host's long-term memory (e.g. Claude Code memory) when available.
+   - READ FIRST: before ANY task (answer, code, debug, plan), open the relevant
+     `kb/` notes to orient — do NOT grep or scan the whole repo first. If the KB
+     lacks something, follow its `path:line` pointers into the code, then fold the
+     finding back in.
+   - AFTER CHANGING code/config: update the affected `kb/` note(s) in the SAME
+     session, before ending your turn — part of "done". (Exact rules: `kb/about-kb.md`.)
+   - WHEN THE USER states/corrects a durable preference, goal, or rule: update
+     `kb/about-you.md` the same session.
+   - SUB-AGENTS & SKILLS: anything you dispatch starts cold — pass it these rules.
 
    Map of the KB:
    - kb/overview.md — <keep existing 1-line>
+   - kb/about-kb.md — full KB-maintenance + sub-agent + user-map rules (read before maintaining)
    - kb/architecture.md — <keep existing 1-line>
    - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
    - kb/subprojects/ — <list sub-projects, if any>
@@ -56,21 +75,21 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    - kb/conventions.md, kb/glossary.md
    - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — traps, KB history, command cheatsheet (optional)
    ```
-2. Create `kb/about-you.md` if it is missing — a compact note (≤ 50 lines) of
+3. Create `kb/about-you.md` if it is missing — a compact note (≤ 50 lines) of
    durable facts about the USER: working style, tech preferences, project goals,
    and standing rules, each tagged [confirmed]/[inferred]. If it already exists,
    leave its content untouched. Ensure its line is in the KB map above.
-3. Create `kb/gotchas.md`, `kb/changelog.md`, and `kb/cheatsheet.md` if they are
+4. Create `kb/gotchas.md`, `kb/changelog.md`, and `kb/cheatsheet.md` if they are
    useful for this repo (skip any that do not apply); add their line to the KB map.
-4. If the repo has sub-projects / monorepo packages (`apps/`, `packages/`,
+5. If the repo has sub-projects / monorepo packages (`apps/`, `packages/`,
    `services/`, or nested `package.json` / `pyproject.toml` / `go.mod` /
    `*.csproj` / `pubspec.yaml`) and `kb/subprojects/` is missing, READ each one
    and add a tiny `kb/subprojects/<name>.md` (purpose, stack, entry point, how it
    wires to the rest). Leave unrelated notes untouched.
-5. Add missing `[[other-note]]` cross-links: older setups were generated without
+6. Add missing `[[other-note]]` cross-links: older setups were generated without
    them, so scan each `kb/` note and link it to its related notes (e.g. a feature
    note → `[[conventions]]`, `[[glossary]]`). Add only links; don't rewrite content.
-6. Bump the "last indexed" marker in `kb/overview.md`.
+7. Bump the "last indexed" marker in `kb/overview.md`.
 
 # RULES
 - Incremental ONLY: do not regenerate unchanged KB files.
