@@ -2,7 +2,7 @@
 
 - **Purpose:** Incrementally upgrade an existing claude-kb setup to latest spec without rebuilding `kb/`.
 - **When:** Target already has `kb/` + `## Knowledge Base` in `CLAUDE.md`; user pastes `update.md` instead of `prompt.md`.
-- **Also documented:** `README.md:113-182`.
+- **Also documented:** `README.md:123-192`.
 
 ## What it changes (only)
 

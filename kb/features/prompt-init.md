@@ -1,7 +1,7 @@
 # Feature — init prompt (`prompt.md`)
 
 - **Purpose:** One-shot bootstrap of a compact, self-maintaining KB in any repo.
-- **Trigger:** User pastes contents of `prompt.md` (or README block at `README.md:20-111`).
+- **Trigger:** User pastes contents of `prompt.md` (or README block at `README.md:30-121`).
 
 ## Key sections in `prompt.md`
 

@@ -4,6 +4,15 @@ A reusable **Claude Code** prompt that builds a compact, self-maintaining
 knowledge base (`kb/`) for any repo. Future sessions read a small map instead of
 the whole codebase — **fewer tokens, faster sessions.**
 
+## What's new in v2.0
+
+- **Using the KB is now mandatory** — the wired `CLAUDE.md` opens with a strong
+  "read the KB FIRST" directive, so sessions consult the map before scanning code.
+- **Cross-linking is enforced** — every note links its related notes with
+  `[[other-note]]`, making the KB a navigable web instead of isolated files.
+
+Already on an older setup? Paste [update.md](update.md) to upgrade in place.
+
 ## Use it
 
 1. Open your project in Claude Code.
@@ -12,8 +21,9 @@ the whole codebase — **fewer tokens, faster sessions.**
    them first — then keeps them updated whenever the code changes.
 
 **Already set up an older version?** Paste [update.md](update.md) instead — it
-upgrades your existing `kb/` + `CLAUDE.md` wiring to the latest rules (auto-
-maintain, sub-agents/skills, sub-projects) without rebuilding the whole KB.
+upgrades your existing `kb/` + `CLAUDE.md` wiring to the latest v2.0 rules
+(mandatory KB usage, enforced cross-linking, sub-agents/skills, sub-projects)
+without rebuilding the whole KB.
 
 ## The prompt
 
