@@ -29,9 +29,19 @@ relevant `kb/` notes FIRST to orient, and update them in the SAME session
 after changing code. A sub-agent starts cold, so it won't use the KB unless
 you tell it to.
 
+USER UNDERSTANDING (mandatory): the KB also maps the USER, not just the
+code. `kb/about-you.md` records durable facts about how the user wants you
+to work — working style, tech preferences, project goals, and standing
+rules. Read it FIRST alongside the code notes. Whenever the user states or
+corrects a durable preference, goal, or rule, update `kb/about-you.md` in
+the SAME session. Tag each item [confirmed] (user said/approved it) or
+[inferred] (your guess); promote [inferred] → [confirmed] only when the
+user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+
 Map of the KB:
 - kb/overview.md — what claude-kb is, entry points, how to use
 - kb/architecture.md — repo layout and target-project KB data flow
+- kb/about-you.md — what the USER prefers: working style, tech, goals, rules
 - kb/features/ — prompt-init (bootstrap), prompt-update (upgrade)
 - kb/conventions.md, kb/glossary.md
 

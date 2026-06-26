@@ -12,6 +12,7 @@
 - Reference code as `path:line`, verified by reading the file.
 - One fact per place; cross-link with `[[other-note]]`.
 - Start each file with a one-line summary.
+- `kb/about-you.md` maps the USER (style, tech, goals, rules), not code; tag items [confirmed]/[inferred]. See [[glossary]].
 - `CLAUDE.md` is a pointer only — never duplicate KB content there.
 
 ## Target `CLAUDE.md` section
