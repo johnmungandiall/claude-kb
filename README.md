@@ -56,6 +56,12 @@ flowchart LR
 | **Staying current** | You re-explain the project | Notes auto-update when code changes |
 | **Setup** | — | One paste · any language |
 
+## What's new in v2.1
+
+- **The KB now understands you, not just the code** — a new `kb/about-you.md`
+  note records your working style, tech preferences, goals, and standing rules,
+  and keeps itself updated as you work. Claude reads it first, every session.
+
 ## What's new in v2.0
 
 - **Using the KB is now mandatory** — the wired `CLAUDE.md` opens with a strong
@@ -108,6 +114,7 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
 3. Write the KB as a TREE of tiny files:
    - `kb/overview.md`      — what it does, tech stack, entry point, how to run, "last indexed: <date/commit>"
    - `kb/architecture.md`  — module map + data flow; for monorepos, how sub-projects connect
+   - `kb/about-you.md`    — durable facts about the USER: working style, tech preferences, goals, standing rules; tag each [confirmed]/[inferred]
    - `kb/subprojects/<name>.md`— one per sub-project/package: purpose, stack, entry point, how it wires to the rest (omit if single-project repo)
    - `kb/features/<name>.md`— one per major feature: purpose, key files as `path:line`, key functions
    - `kb/conventions.md`   — naming, folder rules, patterns used
@@ -141,9 +148,19 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    after changing code. A sub-agent starts cold, so it won't use the KB unless
    you tell it to.
 
+   USER UNDERSTANDING (mandatory): the KB also maps the USER, not just the
+   code. `kb/about-you.md` records durable facts about how the user wants you
+   to work — working style, tech preferences, project goals, and standing
+   rules. Read it FIRST alongside the code notes. Whenever the user states or
+   corrects a durable preference, goal, or rule, update `kb/about-you.md` in
+   the SAME session. Tag each item [confirmed] (user said/approved it) or
+   [inferred] (your guess); promote [inferred] → [confirmed] only when the
+   user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+
    Map of the KB:
    - kb/overview.md — <1-line>
    - kb/architecture.md — <1-line>
+   - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
    - kb/subprojects/ — <list sub-projects, if any>
    - kb/features/ — <list feature notes>
    - kb/conventions.md, kb/glossary.md
@@ -216,22 +233,36 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    after changing code. A sub-agent starts cold, so it won't use the KB unless
    you tell it to.
 
+   USER UNDERSTANDING (mandatory): the KB also maps the USER, not just the
+   code. `kb/about-you.md` records durable facts about how the user wants you
+   to work — working style, tech preferences, project goals, and standing
+   rules. Read it FIRST alongside the code notes. Whenever the user states or
+   corrects a durable preference, goal, or rule, update `kb/about-you.md` in
+   the SAME session. Tag each item [confirmed] (user said/approved it) or
+   [inferred] (your guess); promote [inferred] → [confirmed] only when the
+   user confirms. Capture lasting habits, not one-off chatter; never store secrets.
+
    Map of the KB:
    - kb/overview.md — <keep existing 1-line>
    - kb/architecture.md — <keep existing 1-line>
+   - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
    - kb/subprojects/ — <list sub-projects, if any>
    - kb/features/ — <keep existing list>
    - kb/conventions.md, kb/glossary.md
    ```
-2. If the repo has sub-projects / monorepo packages (`apps/`, `packages/`,
+2. Create `kb/about-you.md` if it is missing — a compact note (≤ 50 lines) of
+   durable facts about the USER: working style, tech preferences, project goals,
+   and standing rules, each tagged [confirmed]/[inferred]. If it already exists,
+   leave its content untouched. Ensure its line is in the KB map above.
+3. If the repo has sub-projects / monorepo packages (`apps/`, `packages/`,
    `services/`, or nested `package.json` / `pyproject.toml` / `go.mod` /
    `*.csproj` / `pubspec.yaml`) and `kb/subprojects/` is missing, READ each one
    and add a tiny `kb/subprojects/<name>.md` (purpose, stack, entry point, how it
    wires to the rest). Leave unrelated notes untouched.
-3. Add missing `[[other-note]]` cross-links: older setups were generated without
+4. Add missing `[[other-note]]` cross-links: older setups were generated without
    them, so scan each `kb/` note and link it to its related notes (e.g. a feature
    note → `[[conventions]]`, `[[glossary]]`). Add only links; don't rewrite content.
-4. Bump the "last indexed" marker in `kb/overview.md`.
+5. Bump the "last indexed" marker in `kb/overview.md`.
 
 # RULES
 - Incremental ONLY: do not regenerate unchanged KB files.
