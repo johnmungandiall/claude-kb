@@ -6,24 +6,41 @@ one-line pointer in its place. This is a FOCUSED migration — NOT a full KB
 rebuild (`prompt.md`) and NOT a drift audit (`verify.md`). Nothing is lost; it
 moves, distilled. `CLAUDE.md` must end up a LEAN pointer.
 
+# WORK INCREMENTALLY — ONE SECTION AT A TIME
+A big `CLAUDE.md` will NOT fit in one pass (verifying every `path:line` alone eats
+context). Do NOT cut everything and then rewrite everything. Process ONE section
+fully before the next: write + verify its `kb/` note, and ONLY THEN cut that
+section from `CLAUDE.md` and leave the pointer. That way an interrupted run never
+loses content. If context runs low, STOP at a clean section boundary and report
+exactly which sections are DONE and which REMAIN — never leave `CLAUDE.md`
+half-cut with notes half-written.
+
 # WHAT TO DO
-1. Read `CLAUDE.md` end to end. Note its current size (lines) so you can report
-   the before/after. Sort its content into two buckets:
-   - KEEP (short, always-on directives): rules that must fire EVERY session —
-     "always do X", build/lint/test gates, tone, and the `## Knowledge Base`
-     triggers. These are cheap and stay.
-   - MOVE (reference/knowledge): architecture, module/feature detail, data
-     models, build/run/test commands, configuration, conventions, glossary,
-     domain terms, gotchas — anything read only WHEN working on that area.
-2. For each MOVE section, distill it into the matching `kb/` note (create it if
-   missing): `kb/overview.md`, `kb/architecture.md`, `kb/features/<name>.md`,
-   `kb/conventions.md`, `kb/glossary.md`, `kb/gotchas.md`, `kb/cheatsheet.md`.
-   Condense to summary + `path:line`, ≤50 lines (SPLIT if bigger), never a code
-   dump. Do NOT trust the old `CLAUDE.md` text — OPEN the referenced code and
-   verify each `path:line` before you write it; bloat is often stale.
-3. Replace each moved section in `CLAUDE.md` with a ONE-LINE pointer to its new
-   note (e.g. "Architecture: see `kb/architecture.md`.").
-4. Ensure `CLAUDE.md` has a lean `## Knowledge Base` section — short triggers +
+1. Read `CLAUDE.md` end to end. Note its current size (lines) for the
+   before/after. Sort its content into two buckets:
+   - KEEP (stays in `CLAUDE.md`): short, always-on directives that must fire EVERY
+     session — "always do X", build/lint/test gates, tone, the `## Knowledge Base`
+     triggers. ALSO KEEP safety-critical directives even when conditional (no
+     auto-commit/push/add unless asked, never put secrets in the KB, the
+     release-notes / changelog workflow): leave a ONE-LINE directive in
+     `CLAUDE.md` and move only the deep detail.
+   - MOVE (reference/knowledge): architecture, module/feature detail, data models,
+     build/run/test commands, configuration, conventions, glossary, domain terms,
+     gotchas — anything read only WHEN working on that area.
+2. Take ONE MOVE section and distill it into the matching `kb/` note:
+   - If the note is MISSING, create it (`kb/overview.md`, `kb/architecture.md`,
+     `kb/features/<name>.md`, `kb/conventions.md`, `kb/glossary.md`,
+     `kb/gotchas.md`, `kb/cheatsheet.md`). Condense to summary + `path:line`,
+     ≤50 lines (SPLIT if bigger), never a code dump.
+   - If a matching note ALREADY EXISTS, MERGE the missing detail into it — do NOT
+     overwrite a good note and do NOT duplicate what it already says.
+3. Verify `path:line`s. For any pointer you NEWLY write, OPEN the code and confirm
+   it — never trust the old `CLAUDE.md` text; bloat is often stale. For an
+   existing trusted note, spot-check 2–3 pointers instead of re-verifying it all.
+4. ONLY after the note is written and verified, cut that section from `CLAUDE.md`
+   and replace it with a ONE-LINE pointer (e.g. "Architecture: see
+   `kb/architecture.md`."). Then loop back to step 2 for the next section.
+5. Ensure `CLAUDE.md` has a lean `## Knowledge Base` section — short triggers +
    the KB map + a pointer to `kb/about-kb.md`. If `kb/about-kb.md` is missing,
    create it with the FULL KB-maintenance rules (auto-maintain, sub-agents,
    user-map) so `CLAUDE.md` never has to inline them:
@@ -53,19 +70,23 @@ moves, distilled. `CLAUDE.md` must end up a LEAN pointer.
    - kb/conventions.md, kb/glossary.md
    - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — traps, KB history, command cheatsheet (optional)
    ```
-5. Refresh the "last indexed" marker in `kb/overview.md` and append a dated
+6. Refresh the "last indexed" marker in `kb/overview.md` and append a dated
    one-line entry to `kb/changelog.md` (create either if it is missing).
 
 # RULES
-- Verify before you write: every `path:line` must come from a file you actually
-  OPENED this session — never copied from the old `CLAUDE.md`, never guessed.
+- Verify before you write: every NEW `path:line` must come from a file you
+  actually OPENED this session — never copied from the old `CLAUDE.md`, never
+  guessed. (Existing trusted notes: spot-check, don't re-verify wholesale.)
 - Move, don't delete: each MOVE section must land in a `kb/` note BEFORE you cut
   it from `CLAUDE.md`. Nothing is lost — it moves, condensed.
+- One section at a time; if context runs low, STOP at a clean boundary and report
+  done vs remaining — never leave `CLAUDE.md` half-cut with notes half-written.
 - Each KB note ≤ 50 lines, dense bullets/tables, no code dumps; SPLIT if bigger.
 - NEVER move secrets/keys/tokens/PII into the KB — reference where they live.
 - Keep `CLAUDE.md` a LEAN pointer; do NOT duplicate `kb/about-kb.md` into it.
 - Cross-link each touched note to its related notes with `[[other-note]]`.
 
 # OUTPUT
-Print the `CLAUDE.md` size before vs after (lines), then a short list mapping each
-moved section → its new `kb/` note.
+Print the `CLAUDE.md` size before vs after (lines), a short list mapping each moved
+section → its new `kb/` note, and — if you stopped early — which sections are DONE
+and which REMAIN. Report in the user's working language.
