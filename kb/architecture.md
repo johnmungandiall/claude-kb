@@ -7,6 +7,8 @@
 | `README.md:1` | Human-facing docs; embeds full prompt text for copy-paste |
 | `prompt.md:1` | Init prompt — investigate target code, write `kb/`, wire `CLAUDE.md` |
 | `update.md:1` | Upgrade prompt — incremental spec refresh, no full rebuild |
+| `verify.md:1` | Audit prompt — re-check `path:line` vs code, fix cheap drift |
+| `slim.md:1` | Slim prompt — migrate reference content out of a bloated `CLAUDE.md` into `kb/` |
 | `LICENSE:1` | MIT |
 | `kb/` | KB for *this* meta-repo (created by init) |
 
@@ -30,4 +32,4 @@ User pastes prompt.md
 - `kb/features/<name>.md` — per major feature, `path:line` refs
 - `kb/conventions.md`, `kb/glossary.md`
 
-See `prompt.md:26-37` for the canonical file list. The two prompts are detailed in [[prompt-init]] and [[prompt-update]]; note-writing rules in [[conventions]].
+See `prompt.md:26-37` for the canonical file list. The four prompts are detailed in [[prompt-init]], [[prompt-update]], [[prompt-verify]], and [[prompt-slim]]; note-writing rules in [[conventions]].

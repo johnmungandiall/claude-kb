@@ -1,5 +1,9 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-27 — v2.5:** added a standalone `slim.md` prompt — a focused job that
+  migrates reference content out of an already-bloated `CLAUDE.md` into `kb/` notes
+  and leaves pointers, without rebuilding the KB or auditing for drift. Mirrored
+  into `README.md`; new `kb/features/prompt-slim.md`.
 - **2026-06-27 — v2.4:** the init/upgrade prompts now SLIM the target `CLAUDE.md` —
   migrate reference content (architecture, commands, config, conventions, gotchas)
   out of `CLAUDE.md` into the matching `kb/` note (condensed + `path:line`), leaving
