@@ -12,14 +12,15 @@
 | `23-25` | STEPS §2 | Extract architecture, features, models, APIs, gotchas |
 | `26-37` | STEPS §3 | KB file tree to create (incl. about-you/about-kb/gotchas/changelog/cheatsheet) |
 | `38-77` | STEPS §4 | Create `kb/about-kb.md` — the FULL KB-maintenance rules template |
-| `78-109` | STEPS §5 | LEAN `## Knowledge Base` block for target `CLAUDE.md` (triggers + map + pointer) |
-| `111-129` | RULES | ≤50 lines/file (split if bigger), `path:line` + `(checked <date>)`, `[[cross-link]]`, no secrets, lean CLAUDE.md |
-| `131-133` | OUTPUT | List what changed |
+| `78-117` | STEPS §5 | LEAN `## Knowledge Base` block + SLIM/migrate other `CLAUDE.md` reference content into `kb/` |
+| `119-139` | RULES | ≤50 lines/file (split if bigger), `path:line` + `(checked <date>)`, `[[cross-link]]`, no secrets, lean CLAUDE.md |
+| `141-143` | OUTPUT | List what changed |
 
 ## CLAUDE.md wiring (target)
 
-- Section title exactly `## Knowledge Base` — LEAN template at `prompt.md:82-107`.
+- Section title exactly `## Knowledge Base` — LEAN template at `prompt.md:89-114`.
 - Holds only short TRIGGERS (read-first; after-change → update `kb/`; user-pref → `about-you`; sub-agents) + the KB map + a pointer.
 - The FULL rules (auto-maintain, sub-agents, user-map) live in `kb/about-kb.md`, loaded on demand — NOT inlined in `CLAUDE.md`, so every session stays cheap.
+- STEP 5 also SLIMS an existing bloated `CLAUDE.md`: migrate reference content (architecture, commands, config, conventions…) into the matching `kb/` note (condensed + `path:line`), leaving a one-line pointer; keep only short always-on directives.
 
 See [[prompt-update]] for the incremental upgrade path; [[conventions]] for note rules.

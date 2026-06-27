@@ -44,8 +44,8 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
 
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
-2. Open `CLAUDE.md`, find the `## Knowledge Base` section, and PRESERVE everything
-   else. Replace ONLY that section's body with the LEAN version below — short
+2. Open `CLAUDE.md` and SLIM it to a LEAN pointer (it loads every session). First,
+   replace the `## Knowledge Base` section body with the LEAN version below — short
    triggers + map + a pointer to `kb/about-kb.md` (the old verbose rules now live
    there). Re-use the existing 1-line KB map summaries; add a `kb/subprojects/`
    line if the repo has sub-projects.
@@ -75,6 +75,13 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    - kb/conventions.md, kb/glossary.md
    - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — traps, KB history, command cheatsheet (optional)
    ```
+   Then MIGRATE any OTHER reference/knowledge content in `CLAUDE.md` (architecture,
+   feature/module detail, build/test/run commands, configuration, data models,
+   conventions, glossary, gotchas) INTO the matching `kb/` note — distilled to
+   summary + `path:line`, ≤50 lines (split if bigger), never a code dump — then
+   replace each such section with a one-line pointer. Nothing is lost; it moves,
+   condensed. Keep ONLY short, always-on directives in `CLAUDE.md`. Never move
+   secrets/keys/values — reference where they live.
 3. Create `kb/about-you.md` if it is missing — a compact note (≤ 50 lines) of
    durable facts about the USER: working style, tech preferences, project goals,
    and standing rules, each tagged [confirmed]/[inferred]. If it already exists,

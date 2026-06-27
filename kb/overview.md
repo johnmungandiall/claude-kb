@@ -6,5 +6,5 @@
 - **How to use:** Open target project in Claude Code → paste `prompt.md` → Claude builds `kb/` and wires `CLAUDE.md`.
 - **This repo:** The prompt templates themselves (meta — not a sample app).
 - **See also:** [[architecture]] (layout + data flow), [[prompt-init]] / [[prompt-update]] / [[prompt-verify]] (the three prompts), [[about-you]] (user map), [[cheatsheet]], [[gotchas]], [[changelog]], [[glossary]].
-- **version:** 2.3 — the wired `CLAUDE.md` is now a LEAN pointer (triggers + map); full KB-maintenance rules moved to `kb/about-kb.md`, loaded on demand. (v2.2: last-verified markers, mermaid, global user prefs, secret guard, size-split; `gotchas`/`changelog`/`cheatsheet`; `verify.md`.)
-- **last indexed:** 2026-06-26 / v2.3 lean-CLAUDE.md refactor
+- **version:** 2.4 — the init/upgrade prompts now SLIM the target `CLAUDE.md`, migrating reference content into `kb/` notes (condensed + `path:line`) and leaving pointers. (v2.3: wired `CLAUDE.md` made a LEAN pointer; full rules → `kb/about-kb.md`, loaded on demand.)
+- **last indexed:** 2026-06-27 / v2.4 CLAUDE.md auto-slim
