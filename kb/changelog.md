@@ -1,5 +1,13 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-27 — v2.12:** the checker now RESOLVES note-relative paths, not just
+  root-relative — so it actually verifies pointers written as markdown links
+  (`](../../lib/...):69`), checking the file + line range instead of just rejecting
+  the form (reported by John: the tool was effectively seeing ~1 of 30+ real
+  pointers). Verified on a mixed-form fixture (valid link `:69` passes; out-of-range,
+  missing file, and pathless `name():line` all caught). Pointer rule reconciled to
+  accept root- OR note-relative paths; all embedded copies + `tools/kb-check.sh`
+  re-synced (embedded == file gate).
 - **2026-06-27 — v2.11:** added a standalone `check.md` prompt — a focused,
   can't-skip installer that creates `tools/kb-check.sh` + the sample hook and runs
   it, for repos whose KB predates the checker (or that just want the drift gate)

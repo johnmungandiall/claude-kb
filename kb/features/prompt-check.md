@@ -8,15 +8,15 @@
 
 | Step | Source | Action |
 |------|--------|--------|
-| 1 | `check.md:9-52` | Create `tools/kb-check.sh` verbatim (the embedded script) |
-| 2 | `check.md:53-63` | Create the sample `tools/hooks/pre-commit` |
-| 3 | `check.md:64-67` | RUN it; fix flagged pointers (full path from root); don't report done until OK |
-| 4 | `check.md:68-70` | Tell the user how to install the opt-in hook |
+| 1 | `check.md:9-58` | Create `tools/kb-check.sh` verbatim (the embedded script) |
+| 2 | `check.md:59-69` | Create the sample `tools/hooks/pre-commit` |
+| 3 | `check.md:70-73` | RUN it; fix flagged pointers (full path from root); don't report done until OK |
+| 4 | `check.md:74-76` | Tell the user how to install the opt-in hook |
 
 ## Rules & output
 
-- Focused: only creates the two files + fixes flagged pointers; script written byte-for-byte; never installs the hook into `.git/` without asking (`check.md:71-76`).
-- Output: whether kb-check ends OK + what was created/fixed (`check.md:77-79`).
+- Focused: only creates the two files + fixes flagged pointers; script written byte-for-byte; never installs the hook into `.git/` without asking (`check.md:77-82`).
+- Output: whether kb-check ends OK + what was created/fixed (`check.md:83-85`).
 
 ## Notes
 

@@ -15,12 +15,12 @@
 | 5 | `update.md:115-119` | Add missing `kb/subprojects/` notes if monorepo |
 | 6 | `update.md:120-122` | Add missing `[[other-note]]` cross-links to existing notes |
 | 7 | `update.md:123-132` | Create `.claude/agents/` KB subagents if missing (see [[kb-agents]]) |
-| 8 | `update.md:133-191` | Create `tools/kb-check.sh` + sample `tools/hooks/pre-commit` if missing |
-| 9 | `update.md:192` | Bump "last indexed" in `kb/overview.md` |
+| 8 | `update.md:133-197` | Create `tools/kb-check.sh` + sample `tools/hooks/pre-commit` if missing |
+| 9 | `update.md:198` | Bump "last indexed" in `kb/overview.md` |
 
 ## Rules
 
-- Incremental only — do not regenerate unchanged KB files (`update.md:194-199`).
+- Incremental only — do not regenerate unchanged KB files (`update.md:200-205`).
 - Same accuracy rules: `path:line` from opened files only.
 
 Contrast with [[prompt-init]] (full bootstrap); note rules in [[conventions]].

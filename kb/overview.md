@@ -6,4 +6,4 @@
 - **How to use:** Open target project in Claude Code → paste `prompt.md` → Claude builds `kb/` and wires `CLAUDE.md`.
 - **This repo:** The prompt templates themselves (meta — not a sample app).
 - **See also:** [[architecture]] (layout + data flow), [[prompt-init]] / [[prompt-update]] / [[prompt-verify]] / [[prompt-slim]] / [[prompt-check]] (the five prompts), [[kb-agents]] (the `.claude/agents/` subagents), [[about-you]] (user map), [[cheatsheet]], [[gotchas]], [[changelog]], [[glossary]].
-- **last indexed:** 2026-06-27 / v2.11 — full version history in [[changelog]] (single source of truth; not duplicated here).
+- **last indexed:** 2026-06-27 / v2.12 — full version history in [[changelog]] (single source of truth; not duplicated here).

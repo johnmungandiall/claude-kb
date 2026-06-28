@@ -13,7 +13,7 @@
 ## KB note rules (enforced in prompts)
 
 - Each file ≤ 50 lines; bullets/tables; no code dumps.
-- Reference code as a FULL path from the repo root + `:line` (e.g. `prompt.md` at line 42), verified by reading the file — no bare filenames or stray punctuation, so `tools/kb-check.sh` can verify it. Name the function/class too: the NAME is the durable anchor, the line a hint that may drift (grep the name if it's off).
+- Reference code as a `path:line` the checker can resolve — a full path from the repo root (preferred) or one relative to the note (markdown links work), verified by reading the file; no bare filenames or `name()` refs without a path, so `tools/kb-check.sh` can verify it. Name the function/class too: the NAME is the durable anchor, the line a hint that may drift (grep the name if it's off).
 - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a one-line `last indexed: <date>`, nothing more — no duplication.
 - Don't rely on memory — run `bash tools/kb-check.sh` (resolves every pointer; `--freshness` flags git-stale notes) before release or on a pre-commit hook. See [[cheatsheet]].
 - One fact per place; cross-link with `[[other-note]]`.

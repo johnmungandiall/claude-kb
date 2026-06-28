@@ -56,10 +56,10 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    - GOAL-DRIVEN: turn the task into a concrete check and loop until it verifies.
 
    ## Pointers & freshness
-   - A code pointer is ALWAYS a full path from the repo root + `:line` (e.g.
-     `lib/foo/bar.dart` at line 42) — never a bare filename or stray punctuation, so a
-     script can verify it. Name the function/class too: the NAME is the durable
-     anchor, the line is a hint that may drift — grep the name if the line is off.
+   - A code pointer is a `path:line` the checker can RESOLVE — a full path from
+     the repo root (preferred) or one relative to the note (markdown links work);
+     never a bare filename or a `name()` ref with no path. Name the function/class
+     too: the NAME is the durable anchor, the line a hint that may drift (grep it).
    - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a
      one-line `last indexed: <date>` and nothing more — don't duplicate history.
    - Don't rely on discipline — run `tools/kb-check.sh` (created by the claude-kb
@@ -137,38 +137,44 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
 
 ```bash
 #!/usr/bin/env bash
-# kb-check.sh — verify KB code pointers resolve, in WHATEVER form they are written:
-#   `path.ext:line` (backtick), [text](path):line (markdown link), path):line
-#   (stray paren). Every pointer must be a full path FROM THE REPO ROOT. A ref with
-#   no file path (e.g. start():226) is flagged as uncheckable — convert it. With
-#   --freshness, also flag notes older than the code they cite (git).
-# Deps: git-bash builtins only. Run from the repo root:
+# kb-check.sh — verify KB code pointers RESOLVE and their line is in range, in
+# WHATEVER form they are written: `path:line` (backtick), [text](path):line
+# (markdown link), path):line (stray paren). The path may be root-relative OR
+# relative to the note itself (e.g. ../../lib/...). A ref with no file path (e.g.
+# start():226) is flagged as uncheckable. With --freshness, also flag notes older
+# than the code they cite (git). Deps: git-bash builtins only. From the repo root:
 #   bash tools/kb-check.sh [--freshness]
 set -u
 kb="kb"; [ -d "$kb" ] || { echo "run from the repo root (no kb/ here)"; exit 0; }
 bad=0
+resolve() {  # <note> <path> -> prints the existing file (root- or note-relative), else nothing
+  [ -f "$2" ] && { printf '%s' "$2"; return; }
+  [ -f "$(dirname "$1")/$2" ] && printf '%s' "$(dirname "$1")/$2"
+}
 # pointers that carry a file path:  <path>.<ext> [optional )] : <line>
 while IFS= read -r hit; do
   note="${hit%%:*}"; r="${hit#*:}"; ptr="${r#*:}"
   ln="${ptr##*:}"; p="${ptr%:*}"; p="${p%\)}"
-  if [ ! -f "$p" ]; then
-    echo "  x $note -> $ptr  (not found — use a full path from the repo root)"; bad=$((bad + 1))
+  f="$(resolve "$note" "$p")"
+  if [ -z "$f" ]; then
+    echo "  x $note -> $ptr  (file not found)"; bad=$((bad + 1))
   else
-    t=$(wc -l < "$p" | tr -d ' '); [ "$ln" -le "$t" ] || { echo "  x $note -> $ptr  (file has $t lines)"; bad=$((bad + 1)); }
+    t=$(wc -l < "$f" | tr -d ' '); [ "$ln" -le "$t" ] || { echo "  x $note -> $ptr  (file has $t lines)"; bad=$((bad + 1)); }
   fi
 done < <(grep -rnoE '[A-Za-z0-9_./-]+\.[A-Za-z0-9_]+\)?:[0-9]+' "$kb" 2>/dev/null)
 # refs with NO file path (e.g. the function form start():226) — uncheckable, must be fixed
 while IFS= read -r hit; do
   note="${hit%%:*}"; m="${hit#*:}"; m="${m#*:}"
-  echo "  ? $note -> $m  (no file path — write it as a full path:line)"; bad=$((bad + 1))
+  echo "  ? $note -> $m  (no file path — write it as a path:line)"; bad=$((bad + 1))
 done < <(grep -rnoE '[A-Za-z_][A-Za-z0-9_]*\([^)]*\):[0-9]+' "$kb" 2>/dev/null)
 if [ "${1:-}" = "--freshness" ]; then
   find "$kb" -name '*.md' | while IFS= read -r note; do
     nt=$(git log -1 --format=%ct -- "$note" 2>/dev/null) || continue; [ -n "$nt" ] || continue
     grep -oE '[A-Za-z0-9_./-]+\.[A-Za-z0-9_]+\)?:[0-9]+' "$note" 2>/dev/null \
       | sed -e 's/):[0-9]*$//' -e 's/:[0-9]*$//' | sort -u | while IFS= read -r p; do
-        [ -f "$p" ] || continue; ct=$(git log -1 --format=%ct -- "$p" 2>/dev/null); [ -n "$ct" ] || continue
-        [ "$ct" -gt "$nt" ] && echo "  ~ $note  (points to newer $p — re-check)"
+        f="$(resolve "$note" "$p")"; [ -n "$f" ] || continue
+        ct=$(git log -1 --format=%ct -- "$f" 2>/dev/null); [ -n "$ct" ] || continue
+        [ "$ct" -gt "$nt" ] && echo "  ~ $note  (points to newer $f — re-check)"
       done
   done
 fi
