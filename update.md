@@ -31,6 +31,9 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    - A dispatched sub-agent (Task/Agent) or skill/workflow starts cold. Pass it the
      same rules: read the relevant `kb/` notes FIRST, and update them in the SAME
      session after changing code.
+   - This KB ships dedicated subagents in `.claude/agents/` (`kb-maintainer`,
+     `kb-verify`, `kb-slim`); prefer DELEGATING KB work to them — they auto-trigger
+     on the right tasks and already follow these rules.
 
    ## User map
    - `kb/about-you.md` records durable facts about how the user wants you to work —
@@ -41,6 +44,16 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    - Capture lasting habits, not one-off chatter; never store secrets. Prefs that
      apply across ALL the user's projects → also persist to host long-term memory
      (e.g. Claude Code memory) when available.
+
+   ## How to work
+   - THINK FIRST: state assumptions; if the request has multiple readings or a
+     simpler path exists, say so — don't silently pick.
+   - SIMPLEST THING: the minimum change that solves it — no speculative features,
+     abstractions, or config that wasn't asked for.
+   - SURGICAL: change only what the task needs; match the surrounding style; don't
+     refactor or reformat unrelated code; remove only the orphans YOUR change
+     creates, and flag (don't delete) other dead code.
+   - GOAL-DRIVEN: turn the task into a concrete check and loop until it verifies.
 
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
@@ -96,7 +109,17 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
 6. Add missing `[[other-note]]` cross-links: older setups were generated without
    them, so scan each `kb/` note and link it to its related notes (e.g. a feature
    note → `[[conventions]]`, `[[glossary]]`). Add only links; don't rewrite content.
-7. Bump the "last indexed" marker in `kb/overview.md`.
+7. Create `.claude/agents/` if it is missing — three KB subagents so the KB
+   maintains ITSELF via auto-delegating agents (Claude Code invokes each by its
+   `description`, in its own context window). Each is a Claude Code agent file
+   (YAML frontmatter `name` / `description` / `tools` / `model: inherit` + a short
+   system prompt): `kb-maintainer.md` (use PROACTIVELY after any code/config change
+   to refresh the affected `kb/` notes), `kb-verify.md` (audit the KB for drift —
+   the `verify.md` workflow, no Write), and `kb-slim.md` (shrink a bloated
+   `CLAUDE.md` — the `slim.md` workflow). Leave any that already exist untouched.
+   Give each agent body the same "How to work" discipline: think first, make the
+   simplest surgical change, and verify before finishing.
+8. Bump the "last indexed" marker in `kb/overview.md`.
 
 # RULES
 - Incremental ONLY: do not regenerate unchanged KB files.

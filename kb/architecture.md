@@ -9,6 +9,7 @@
 | `update.md:1` | Upgrade prompt — incremental spec refresh, no full rebuild |
 | `verify.md:1` | Audit prompt — re-check `path:line` vs code, fix cheap drift |
 | `slim.md:1` | Slim prompt — migrate reference content out of a bloated `CLAUDE.md` into `kb/` |
+| `.claude/agents/` | KB subagents (`kb-maintainer` / `kb-verify` / `kb-slim`); the prompts auto-create these in any target repo |
 | `LICENSE:1` | MIT |
 | `kb/` | KB for *this* meta-repo (created by init) |
 
@@ -19,7 +20,8 @@ User pastes prompt.md
   → Claude reads target codebase
   → writes kb/{overview,architecture,about-kb,about-you,features/*,conventions,glossary}.md
   → adds a LEAN ## Knowledge Base section to target CLAUDE.md (triggers + map + pointer to kb/about-kb.md)
-  → future sessions read kb/ first; full maintain rules in kb/about-kb.md; AUTO-MAINTAIN on code changes
+  → writes .claude/agents/{kb-maintainer,kb-verify,kb-slim}.md (auto-delegating KB subagents)
+  → future sessions read kb/ first; full maintain rules in kb/about-kb.md; AUTO-MAINTAIN on code changes (often via the kb-maintainer agent)
 ```
 
 ## KB tree spec (written into target)
@@ -32,4 +34,4 @@ User pastes prompt.md
 - `kb/features/<name>.md` — per major feature, `path:line` refs
 - `kb/conventions.md`, `kb/glossary.md`
 
-See `prompt.md:26-37` for the canonical file list. The four prompts are detailed in [[prompt-init]], [[prompt-update]], [[prompt-verify]], and [[prompt-slim]]; note-writing rules in [[conventions]].
+See `prompt.md:26-37` for the canonical file list. The four prompts are detailed in [[prompt-init]], [[prompt-update]], [[prompt-verify]], and [[prompt-slim]]; the auto-created subagents in [[kb-agents]]; note-writing rules in [[conventions]].

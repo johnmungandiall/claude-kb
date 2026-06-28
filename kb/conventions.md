@@ -7,6 +7,7 @@
 - **`verify.md`** — audit existing KB for drift vs code; fix cheap, report rest. See [[prompt-verify]].
 - **`slim.md`** — shrink a bloated `CLAUDE.md`; migrate reference content into `kb/`, leave pointers. See [[prompt-slim]].
 - **`README.md`** — duplicates all four prompts in fenced blocks for GitHub browsing; keep byte-identical to the standalone files.
+- **`.claude/agents/`** — KB subagents the prompts auto-create (`kb-maintainer`, `kb-verify`, `kb-slim`); distilled, NOT byte-synced to the prompts (generated artifacts). See [[kb-agents]].
 
 ## KB note rules (enforced in prompts)
 

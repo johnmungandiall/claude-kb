@@ -11,6 +11,7 @@ Tag each item [confirmed] (user said/approved) or [inferred] (a guess; promote o
 
 ## Project goals
 - Extend claude-kb so the KB also understands the USER and self-evolves, not just maps code. [confirmed]
+- The KB should self-evolve by auto-creating its OWN Claude Code subagents (`.claude/agents/`) for KB upkeep. [confirmed]
 
 ## Decisions & rules
 - Keep README's embedded prompts in sync with `prompt.md` / `update.md`. [confirmed]

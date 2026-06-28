@@ -1,5 +1,13 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-27 — v2.6:** the prompts now AUTO-CREATE KB subagents under
+  `.claude/agents/` (`kb-maintainer`, `kb-verify`, `kb-slim`) so the KB maintains
+  ITSELF via auto-delegating agents in their own context window. `prompt.md` STEP 6
+  + `update.md` step 7 write them; about-kb "Sub-agents" rule prefers delegating to
+  them. New `kb/features/kb-agents.md`; reference copies live in this repo's
+  `.claude/agents/`. README prompt/update blocks mirrored. Also added a condensed
+  "How to work" discipline (think-first, simplest, surgical, goal-driven) to the
+  about-kb template and to each agent body.
 - **2026-06-27 — v2.5:** added a standalone `slim.md` prompt — a focused job that
   migrates reference content out of an already-bloated `CLAUDE.md` into `kb/` notes
   and leaves pointers, without rebuilding the KB or auditing for drift. Hardened for

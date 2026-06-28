@@ -28,7 +28,9 @@ session. When you dispatch a sub-agent (Task/Agent) or run a skill/workflow
 that reads or edits code, pass the same rule in its instructions — read the
 relevant `kb/` notes FIRST to orient, and update them in the SAME session
 after changing code. A sub-agent starts cold, so it won't use the KB unless
-you tell it to.
+you tell it to. This repo also ships dedicated KB subagents in `.claude/agents/`
+(`kb-maintainer`, `kb-verify`, `kb-slim`) — prefer delegating KB upkeep, drift
+audits, and CLAUDE.md slimming to them; they auto-trigger by their description.
 
 USER UNDERSTANDING (mandatory): the KB also maps the USER, not just the
 code. `kb/about-you.md` records durable facts about how the user wants you
@@ -45,7 +47,7 @@ Map of the KB:
 - kb/overview.md — what claude-kb is, entry points, how to use
 - kb/architecture.md — repo layout and target-project KB data flow
 - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
-- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit), prompt-slim (shrink a bloated CLAUDE.md)
+- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit), prompt-slim (shrink a bloated CLAUDE.md), kb-agents (the .claude/agents/ subagents)
 - kb/conventions.md, kb/glossary.md
 - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — repo traps, KB history, command cheatsheet
 

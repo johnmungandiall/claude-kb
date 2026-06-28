@@ -62,6 +62,9 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    - A dispatched sub-agent (Task/Agent) or skill/workflow starts cold. Pass it the
      same rules: read the relevant `kb/` notes FIRST, and update them in the SAME
      session after changing code.
+   - This KB ships dedicated subagents in `.claude/agents/` (`kb-maintainer`,
+     `kb-verify`, `kb-slim`); prefer DELEGATING KB work to them — they auto-trigger
+     on the right tasks and already follow these rules.
 
    ## User map
    - `kb/about-you.md` records durable facts about how the user wants you to work —
@@ -72,6 +75,16 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    - Capture lasting habits, not one-off chatter; never store secrets. Prefs that
      apply across ALL the user's projects → also persist to host long-term memory
      (e.g. Claude Code memory) when available.
+
+   ## How to work
+   - THINK FIRST: state assumptions; if the request has multiple readings or a
+     simpler path exists, say so — don't silently pick.
+   - SIMPLEST THING: the minimum change that solves it — no speculative features,
+     abstractions, or config that wasn't asked for.
+   - SURGICAL: change only what the task needs; match the surrounding style; don't
+     refactor or reformat unrelated code; remove only the orphans YOUR change
+     creates, and flag (don't delete) other dead code.
+   - GOAL-DRIVEN: turn the task into a concrete check and loop until it verifies.
 
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
@@ -115,6 +128,25 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    Fill the 1-line summaries from the actual files. Keep this section tight; never
    duplicate `kb/about-kb.md` content into `CLAUDE.md` — point to it. The whole
    `CLAUDE.md` should end up a lean pointer, not a manual.
+6. Create `.claude/agents/` so the KB maintains ITSELF through auto-delegating
+   subagents — Claude Code invokes each one automatically by its `description`, in
+   its OWN context window (keeps the main session cheap). Write each as a Claude
+   Code agent file: YAML frontmatter (`name`, `description`, `tools`,
+   `model: inherit`) then a short system prompt. Create three:
+   - `.claude/agents/kb-maintainer.md` — `description` says to use it PROACTIVELY
+     after ANY code/config change to refresh the affected `kb/` notes. Body: read
+     `kb/about-kb.md` (or the `## Knowledge Base` rules) + the relevant notes
+     FIRST; update ONLY the notes whose code changed; verify every `path:line` by
+     opening the file; bump "last indexed" and append `kb/changelog.md`.
+   - `.claude/agents/kb-verify.md` — `description`: audit the KB for DRIFT (when it
+     may be stale or on request). Body: re-check every `path:line`, fix cheap
+     mismatches in place, list the rest — the `verify.md` workflow. No Write tool.
+   - `.claude/agents/kb-slim.md` — `description`: shrink a bloated `CLAUDE.md`.
+     Body: migrate reference content into `kb/` notes ONE section at a time and
+     leave pointers, KEEPing safety-critical directives — the `slim.md` workflow.
+   These let the main thread DELEGATE heavy KB work instead of doing it inline.
+   Give each agent body the same "How to work" discipline: think first, make the
+   simplest surgical change, and verify before finishing.
 
 # RULES — keep it SMALL, DYNAMIC, ADVANCED
 - ACCURACY over speed: every claim and every `path:line` must come from code you
@@ -139,5 +171,5 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
   (keeps every session cheap).
 
 # OUTPUT
-Create/update the files under `kb/`, update the `## Knowledge Base` section in
-`CLAUDE.md`, then print a short list of what changed.
+Create/update the files under `kb/` and `.claude/agents/`, update the
+`## Knowledge Base` section in `CLAUDE.md`, then print a short list of what changed.
