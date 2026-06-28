@@ -1,5 +1,20 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-28 — v2.13:** the checker is now SYMBOL-AWARE and can AUTO-FIX. Root
+  cause (reported by John): the prior tool only saw backtick `path:line` and
+  un-backticked `name():line`, so the dominant **name-anchored** style — `` `Name`:line ``
+  / `` `name()`:line `` with the file given by a same-line link (colon OUTSIDE the
+  backticks) — slipped through silently → false "OK" while real pointers drifted.
+  Rewrote `tools/kb-check.sh` (single awk pass + per-record check): (1) binds a
+  name-anchored pointer to its file via a same-line md-link, a `(basename.ext)` hint,
+  or the note's **primary file** (first link); (2) STALE = the named symbol isn't on
+  the cited line (catches in-range drift); (3) `--fix` rewrites a drifted `:line` from
+  the symbol's unique definition (excludes calls/comments); (4) markdown-link &
+  backtick-path stay hard errors. Coverage on a real KB went 5→54 checked. Wired
+  `--fix` into `prompt.md` / `update.md` / `check.md` / `verify.md` (run `--fix`, then
+  a plain check until `broken 0`); re-synced all embedded copies (3× in README) and
+  the "Pointers & freshness" rule (prefer name-anchored; illustrative examples use a
+  `<line>` placeholder so the checker skips them). See [[gotchas]].
 - **2026-06-27 — v2.12:** the checker now RESOLVES note-relative paths, not just
   root-relative — so it actually verifies pointers written as markdown links
   (`](../../lib/...):69`), checking the file + line range instead of just rejecting

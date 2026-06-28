@@ -8,10 +8,10 @@
 
 | Step | Source | Action |
 |------|--------|--------|
-| 1 | `check.md:9-58` | Create `tools/kb-check.sh` verbatim (the embedded script) |
-| 2 | `check.md:59-69` | Create the sample `tools/hooks/pre-commit` |
-| 3 | `check.md:70-73` | RUN it; fix flagged pointers (full path from root); don't report done until OK |
-| 4 | `check.md:74-76` | Tell the user how to install the opt-in hook |
+| 1 | check.md "WHAT TO DO" step 1 | Create `tools/kb-check.sh` verbatim (the embedded script — symbol-aware, `--fix`) |
+| 2 | check.md "WHAT TO DO" step 2 | Create the sample `tools/hooks/pre-commit` |
+| 3 | check.md "WHAT TO DO" step 3 | RUN `--fix` (auto-repairs drifted lines), then a plain run; resolve leftover BROKEN/STALE by hand until `broken 0` |
+| 4 | check.md "WHAT TO DO" step 4 | Tell the user how to install the opt-in hook |
 
 ## Rules & output
 

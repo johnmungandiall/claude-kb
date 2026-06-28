@@ -16,14 +16,22 @@
   edit needs `replace_all` (or matching edits) or the copies diverge.
 
 - **Example pointers must not look real.** `tools/kb-check.sh` scans `kb/` for any
-  `path.ext` + colon + number and tries to resolve it — so write ILLUSTRATIVE
-  examples as `path.ext` at line N (no colon-number), or the checker false-fails on
-  the example (esp. the about-kb template that ships to target repos).
-- **kb-check.sh is embedded in the prompts.** Its full text lives in
-  `tools/kb-check.sh` AND inside `prompt.md` / `update.md` / `check.md` (mirrored in
-  README). Change one → change all; gate: the first ````bash```` block in each must
-  equal `tools/kb-check.sh`. `prompt.md` / `update.md` also make creating it a
-  verified OUTPUT step (run the checker before reporting done); `check.md` is the
-  focused, can't-skip installer.
+  `path.ext`/`name()` + colon + NUMBER and tries to resolve/relocate it (and `--fix`
+  would rewrite it) — so write ILLUSTRATIVE examples with a `<line>` placeholder, NOT
+  a real number (e.g. `` `start()`:<line> ``), or the checker acts on the example
+  (esp. the about-kb template that ships to target repos). A name with no real number
+  is inert.
+- **kb-check.sh is embedded in the prompts AND now symbol-aware.** Its full text
+  lives in `tools/kb-check.sh` AND inside `prompt.md` / `update.md` / `check.md`
+  (mirrored 3× in README). Change one → change all; gate: the first ````bash```` block
+  in each must equal `tools/kb-check.sh` (swap helper: an awk that replaces the block
+  between the `#!/usr/bin/env bash` + `# kb-check.sh —` line and the final
+  `exit 0 || exit 1`). The checker handles 3 pointer styles — markdown-link and
+  backtick-path (must resolve; broken = exit 1) and name-anchored `` `Name`:line ``
+  (file from a same-line link / `(basename.ext)` hint / the note's first link; STALE
+  when the symbol isn't on the cited line). `--fix` relocates a drifted line by the
+  symbol's unique definition; `--freshness` flags git-stale notes. `prompt.md` /
+  `update.md` / `check.md` / `verify.md` all run `--fix` then a plain check (`broken 0`)
+  before reporting done; `check.md` is the focused, can't-skip installer.
 
 See [[conventions]] for the rules, [[overview]] for the big picture.

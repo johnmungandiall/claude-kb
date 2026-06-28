@@ -11,7 +11,7 @@
 | `slim.md:1` | Slim prompt — migrate reference content out of a bloated `CLAUDE.md` into `kb/` |
 | `check.md:1` | Check prompt — install `tools/kb-check.sh` + sample hook in any repo (focused) |
 | `.claude/agents/` | KB subagents (`kb-maintainer` / `kb-verify` / `kb-slim`); the prompts auto-create these in any target repo |
-| `tools/kb-check.sh` | Drift checker — resolves every pointer in any form (backtick / `](md-link):line` / stray-paren), flags pathless `name():line` refs; `--freshness` flags git-stale notes; auto-created by the prompts |
+| `tools/kb-check.sh` | Drift checker (symbol-aware) — resolves markdown-link & backtick-path pointers (broken = exit 1) and binds name-anchored `` `Name`:line `` to its file (same-line link / `(basename.ext)` hint / the note's first link), flagging STALE when the symbol left the cited line; `--fix` relocates a drifted line by the symbol's unique definition, `--freshness` flags git-stale notes; auto-created by the prompts |
 | `tools/hooks/pre-commit` | Sample opt-in hook that runs the checker to gate commits |
 | `LICENSE:1` | MIT |
 | `kb/` | KB for *this* meta-repo (created by init) |

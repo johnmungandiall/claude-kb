@@ -4,12 +4,15 @@ where the `kb/` notes no longer match the code. Do NOT rebuild the KB and do NOT
 make large rewrites. Find mismatches, fix the cheap ones, and report the rest.
 
 # WHAT TO DO
-1. If `tools/kb-check.sh` exists, RUN it first (`bash tools/kb-check.sh --freshness`)
-   — it auto-flags every pointer that no longer resolves and every note older than
-   the code it points to; start from its output. Then read every `kb/` note. For
-   each concrete claim — especially `path:line` references — open the referenced
-   file and confirm it still says what the note claims. A note written from a stale
-   guess is the #1 problem; verify, don't assume.
+1. If `tools/kb-check.sh` exists, RUN `bash tools/kb-check.sh --fix` FIRST — it
+   auto-repairs every drifted `:line` whose named symbol it can locate, so you start
+   from a baseline where the mechanical drift is already gone. Then RUN
+   `bash tools/kb-check.sh --freshness` and start from its `BROKEN` / `STALE` /
+   freshness output. Then read every `kb/` note. For each concrete claim —
+   especially `path:line` references — open the referenced file and confirm it still
+   says what the note claims. A note written from a stale guess is the #1 problem;
+   verify, don't assume. (If `tools/kb-check.sh` is the OLD backtick-only version,
+   replace it from `check.md` first — the new one checks all pointer styles + `--fix`.)
 2. Classify each finding:
    - STALE `path:line` — the line moved or the file/function no longer exists; a
      bare filename or non-resolving pointer is STALE (pointers = full path from root).
