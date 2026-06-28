@@ -9,8 +9,9 @@
 | `update.md:1` | Upgrade prompt — incremental spec refresh, no full rebuild |
 | `verify.md:1` | Audit prompt — re-check `path:line` vs code, fix cheap drift |
 | `slim.md:1` | Slim prompt — migrate reference content out of a bloated `CLAUDE.md` into `kb/` |
+| `check.md:1` | Check prompt — install `tools/kb-check.sh` + sample hook in any repo (focused) |
 | `.claude/agents/` | KB subagents (`kb-maintainer` / `kb-verify` / `kb-slim`); the prompts auto-create these in any target repo |
-| `tools/kb-check.sh` | Drift checker — every `path:line` resolves (file + line in range); `--freshness` flags git-stale notes; the prompts auto-create it in any target repo |
+| `tools/kb-check.sh` | Drift checker — resolves every pointer in any form (backtick / `](md-link):line` / stray-paren), flags pathless `name():line` refs; `--freshness` flags git-stale notes; auto-created by the prompts |
 | `tools/hooks/pre-commit` | Sample opt-in hook that runs the checker to gate commits |
 | `LICENSE:1` | MIT |
 | `kb/` | KB for *this* meta-repo (created by init) |
@@ -37,4 +38,4 @@ User pastes prompt.md
 - `kb/features/<name>.md` — per major feature, `path:line` refs
 - `kb/conventions.md`, `kb/glossary.md`
 
-See `prompt.md:26-37` for the canonical file list. The four prompts are detailed in [[prompt-init]], [[prompt-update]], [[prompt-verify]], and [[prompt-slim]]; the auto-created subagents in [[kb-agents]]; note-writing rules in [[conventions]].
+See `prompt.md:26-37` for the canonical file list. The five prompts are detailed in [[prompt-init]], [[prompt-update]], [[prompt-verify]], [[prompt-slim]], and [[prompt-check]]; the auto-created subagents in [[kb-agents]]; note-writing rules in [[conventions]].

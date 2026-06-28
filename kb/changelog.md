@@ -1,5 +1,26 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-27 — v2.11:** added a standalone `check.md` prompt — a focused,
+  can't-skip installer that creates `tools/kb-check.sh` + the sample hook and runs
+  it, for repos whose KB predates the checker (or that just want the drift gate)
+  without a full init/update. New `kb/features/prompt-check.md`; mirrored into
+  README; embedded script == `tools/kb-check.sh` (gate). Now five prompts.
+- **2026-06-27 — v2.10:** FIX — agents running `update.md` (and `prompt.md`) were
+  SKIPPING the create-`tools/kb-check.sh` step (a long, late, "if missing" step), so
+  the checker never landed in target repos (reported by John). Made it a verified
+  completion gate: OUTPUT now requires RUNNING `bash tools/kb-check.sh` before
+  reporting done — the command fails if the file is missing, forcing creation. Can't
+  be silently skipped anymore.
+- **2026-06-27 — v2.9:** FIX — `tools/kb-check.sh` only matched the backtick
+  `path:line` form, so it silently ignored markdown-link (`](path):line`),
+  stray-paren (`path):line`) and function-form (`name():line`) pointers — it could
+  report "OK" while checking almost nothing (reported by John). The checker now
+  sees every form: resolves backtick / link / stray-paren paths (must be a full
+  path from the repo root) and flags pathless `name():line` refs as uncheckable.
+  Verified against a mixed-form fixture. Embedded copies in `prompt.md` / `update.md`
+  / README updated to match. Also: illustrative pointer examples (e.g. in the
+  about-kb template) now read "`path` at line N" so the broadened matcher doesn't
+  false-fail on them in fresh target repos.
 - **2026-06-27 — v2.8:** actually SHIP the automation — the prompts now auto-create
   `tools/kb-check.sh` AND a sample `tools/hooks/pre-commit` in any target repo
   (`prompt.md` STEP 7, `update.md` step 8), so the checker the rules reference really

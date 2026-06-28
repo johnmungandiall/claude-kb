@@ -49,14 +49,14 @@ Map of the KB:
 - kb/overview.md — what claude-kb is, entry points, how to use
 - kb/architecture.md — repo layout and target-project KB data flow
 - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
-- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit), prompt-slim (shrink a bloated CLAUDE.md), kb-agents (the .claude/agents/ subagents)
+- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit), prompt-slim (shrink a bloated CLAUDE.md), prompt-check (install the drift checker), kb-agents (the .claude/agents/ subagents)
 - kb/conventions.md, kb/glossary.md
 - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — repo traps, KB history, command cheatsheet
 
 ## Editing the prompts (keep README in sync)
 
-`README.md` embeds the FULL text of `prompt.md`, `update.md`, `verify.md`, and
-`slim.md` in fenced (````markdown) blocks. If you edit any prompt file, mirror the same change
+`README.md` embeds the FULL text of `prompt.md`, `update.md`, `verify.md`,
+`slim.md`, and `check.md` in fenced (````markdown) blocks. If you edit any prompt file, mirror the same change
 into its matching README block in the SAME session, or the copies silently drift.
 Verify with the diff gate (extract each fenced block, `diff` it against the
 standalone file — they must be byte-identical). See `kb/conventions.md` for the

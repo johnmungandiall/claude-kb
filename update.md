@@ -57,7 +57,7 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
 
    ## Pointers & freshness
    - A code pointer is ALWAYS a full path from the repo root + `:line` (e.g.
-     `lib/foo/bar.dart:42`) — never a bare filename or stray punctuation, so a
+     `lib/foo/bar.dart` at line 42) — never a bare filename or stray punctuation, so a
      script can verify it. Name the function/class too: the NAME is the durable
      anchor, the line is a hint that may drift — grep the name if the line is off.
    - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a
@@ -137,34 +137,43 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
 
 ```bash
 #!/usr/bin/env bash
-# kb-check.sh — fail if any kb/ `path:line` pointer no longer resolves (file
-# exists + line in range). With --freshness, also flag notes older than the code
-# they cite (git). Deps: git-bash builtins only. Run from the repo root:
+# kb-check.sh — verify KB code pointers resolve, in WHATEVER form they are written:
+#   `path.ext:line` (backtick), [text](path):line (markdown link), path):line
+#   (stray paren). Every pointer must be a full path FROM THE REPO ROOT. A ref with
+#   no file path (e.g. start():226) is flagged as uncheckable — convert it. With
+#   --freshness, also flag notes older than the code they cite (git).
+# Deps: git-bash builtins only. Run from the repo root:
 #   bash tools/kb-check.sh [--freshness]
 set -u
 kb="kb"; [ -d "$kb" ] || { echo "run from the repo root (no kb/ here)"; exit 0; }
-re='`[A-Za-z0-9_./-]+\.[A-Za-z0-9_]+:[0-9]+'   # `full/path.ext:line` (range :a-b matches a)
 bad=0
-while IFS= read -r h; do
-  note="${h%%:*}"; m="${h#*:}"; m="${m#*:}"; p="${m#\`}"
-  f="${p%:*}"; n="${p##*:}"
-  if [ ! -f "$f" ]; then
-    echo "  x $note -> \`$p\`  (no such file — use a full path from the repo root)"; bad=$((bad + 1))
+# pointers that carry a file path:  <path>.<ext> [optional )] : <line>
+while IFS= read -r hit; do
+  note="${hit%%:*}"; r="${hit#*:}"; ptr="${r#*:}"
+  ln="${ptr##*:}"; p="${ptr%:*}"; p="${p%\)}"
+  if [ ! -f "$p" ]; then
+    echo "  x $note -> $ptr  (not found — use a full path from the repo root)"; bad=$((bad + 1))
   else
-    t=$(wc -l < "$f" | tr -d ' '); [ "$n" -le "$t" ] || { echo "  x $note -> \`$p\`  (file has $t lines)"; bad=$((bad + 1)); }
+    t=$(wc -l < "$p" | tr -d ' '); [ "$ln" -le "$t" ] || { echo "  x $note -> $ptr  (file has $t lines)"; bad=$((bad + 1)); }
   fi
-done < <(grep -rnoE "$re" "$kb" 2>/dev/null)
+done < <(grep -rnoE '[A-Za-z0-9_./-]+\.[A-Za-z0-9_]+\)?:[0-9]+' "$kb" 2>/dev/null)
+# refs with NO file path (e.g. the function form start():226) — uncheckable, must be fixed
+while IFS= read -r hit; do
+  note="${hit%%:*}"; m="${hit#*:}"; m="${m#*:}"
+  echo "  ? $note -> $m  (no file path — write it as a full path:line)"; bad=$((bad + 1))
+done < <(grep -rnoE '[A-Za-z_][A-Za-z0-9_]*\([^)]*\):[0-9]+' "$kb" 2>/dev/null)
 if [ "${1:-}" = "--freshness" ]; then
   find "$kb" -name '*.md' | while IFS= read -r note; do
     nt=$(git log -1 --format=%ct -- "$note" 2>/dev/null) || continue; [ -n "$nt" ] || continue
-    grep -oE "$re" "$note" 2>/dev/null | sed -e 's/^`//' -e 's/:[0-9]*$//' | sort -u | while IFS= read -r f; do
-      [ -f "$f" ] || continue; ct=$(git log -1 --format=%ct -- "$f" 2>/dev/null); [ -n "$ct" ] || continue
-      [ "$ct" -gt "$nt" ] && echo "  ~ $note  (points to newer $f — re-check)"
-    done
+    grep -oE '[A-Za-z0-9_./-]+\.[A-Za-z0-9_]+\)?:[0-9]+' "$note" 2>/dev/null \
+      | sed -e 's/):[0-9]*$//' -e 's/:[0-9]*$//' | sort -u | while IFS= read -r p; do
+        [ -f "$p" ] || continue; ct=$(git log -1 --format=%ct -- "$p" 2>/dev/null); [ -n "$ct" ] || continue
+        [ "$ct" -gt "$nt" ] && echo "  ~ $note  (points to newer $p — re-check)"
+      done
   done
 fi
 [ "$bad" -eq 0 ] && { echo "kb-check: OK — all pointers resolve."; exit 0; }
-echo "kb-check: $bad broken pointer(s)."; exit 1
+echo "kb-check: $bad problem(s) above."; exit 1
 ```
 
    and `tools/hooks/pre-commit`:
@@ -189,4 +198,8 @@ exec bash tools/kb-check.sh
 - Keep the `## Knowledge Base` section tight.
 
 # OUTPUT
-Print a short list of exactly what changed.
+Before finishing, RUN `bash tools/kb-check.sh` — this both confirms the KB's
+pointers resolve AND proves you actually created the tool. If the command fails
+because the file is missing, you skipped step 8: create `tools/kb-check.sh` and
+`tools/hooks/pre-commit` now, then re-run it. Do NOT report done until it runs.
+Then print a short list of exactly what changed.

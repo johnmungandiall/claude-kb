@@ -1,3 +1,15 @@
+# ROLE
+You are INSTALLING the claude-kb drift checker in THIS repo, so the KB's `path:line`
+pointers are verified by a script instead of by memory. This is a FOCUSED job — do
+NOT build or rebuild the KB and do NOT audit notes. Create the tool + a sample hook,
+then prove it runs. Use this on a repo whose KB predates the checker, or any repo
+that just wants the automation.
+
+# WHAT TO DO
+1. Create `tools/kb-check.sh` with EXACTLY this content (make the `tools/` dir if
+   needed; overwrite an older copy). Write it verbatim — do not "improve" it:
+
+```bash
 #!/usr/bin/env bash
 # kb-check.sh — verify KB code pointers resolve, in WHATEVER form they are written:
 #   `path.ext:line` (backtick), [text](path):line (markdown link), path):line
@@ -36,3 +48,32 @@ if [ "${1:-}" = "--freshness" ]; then
 fi
 [ "$bad" -eq 0 ] && { echo "kb-check: OK — all pointers resolve."; exit 0; }
 echo "kb-check: $bad problem(s) above."; exit 1
+```
+
+2. Create a sample hook at `tools/hooks/pre-commit`, verbatim:
+
+```bash
+#!/usr/bin/env bash
+# claude-kb sample pre-commit hook — block the commit if any KB pointer is broken.
+# Install (pick one):
+#   cp tools/hooks/pre-commit .git/hooks/pre-commit   # copy it in
+#   git config core.hooksPath tools/hooks             # or point git at this dir
+exec bash tools/kb-check.sh
+```
+
+3. RUN `bash tools/kb-check.sh` to confirm it works. Fix every problem it reports:
+   make each pointer a full path from the repo root, drop stray punctuation, and
+   convert `name():line` refs to `path:line`. Re-run until it prints OK. Do NOT
+   report done until it runs clean.
+4. Tell the user the hook is opt-in and how to install it (one of the two lines in
+   the hook's header). Do NOT copy it into `.git/` for them without asking.
+
+# RULES
+- FOCUSED: the only edits you make are creating the two files and fixing the broken
+  pointers the checker flags — no KB rebuild, no note rewrites, no new features.
+- Write the script byte-for-byte as given above; don't change its behaviour.
+- Never copy the hook into `.git/hooks/` without the user's say-so.
+
+# OUTPUT
+Say whether `tools/kb-check.sh` ends in OK, and list what you created plus any
+broken pointers you fixed.

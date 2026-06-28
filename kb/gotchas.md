@@ -1,8 +1,8 @@
 # Gotchas — traps specific to this repo. Read before editing prompts or notes.
 
-- **README mirrors all 3 prompts.** `README.md` embeds the full text of
-  `prompt.md`, `update.md`, `verify.md` in ````markdown blocks. Edit a prompt →
-  mirror into its block, or they drift. Verify with the diff gate (see [[cheatsheet]]).
+- **README mirrors all 5 prompts.** `README.md` embeds the full text of
+  `prompt.md`, `update.md`, `verify.md`, `slim.md`, `check.md` in ````markdown
+  blocks. Edit a prompt → mirror into its block, or they drift. Verify with the diff gate (see [[cheatsheet]]).
 - **CLAUDE.md is a POINTER only.** Never duplicate KB content into it; edit the
   `kb/` files instead. Change the KB map line only when a `kb/` file is added/removed.
 - **Line-number refs go stale.** Notes/CLAUDE.md that cite `README.md:NN` or
@@ -14,5 +14,16 @@
   `kb/about-kb.md` template each live in `prompt.md` AND `update.md`, mirrored again
   in README — the about-kb template is byte-identical across all four. A shared-line
   edit needs `replace_all` (or matching edits) or the copies diverge.
+
+- **Example pointers must not look real.** `tools/kb-check.sh` scans `kb/` for any
+  `path.ext` + colon + number and tries to resolve it — so write ILLUSTRATIVE
+  examples as `path.ext` at line N (no colon-number), or the checker false-fails on
+  the example (esp. the about-kb template that ships to target repos).
+- **kb-check.sh is embedded in the prompts.** Its full text lives in
+  `tools/kb-check.sh` AND inside `prompt.md` / `update.md` / `check.md` (mirrored in
+  README). Change one → change all; gate: the first ````bash```` block in each must
+  equal `tools/kb-check.sh`. `prompt.md` / `update.md` also make creating it a
+  verified OUTPUT step (run the checker before reporting done); `check.md` is the
+  focused, can't-skip installer.
 
 See [[conventions]] for the rules, [[overview]] for the big picture.
