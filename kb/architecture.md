@@ -10,6 +10,8 @@
 | `verify.md:1` | Audit prompt — re-check `path:line` vs code, fix cheap drift |
 | `slim.md:1` | Slim prompt — migrate reference content out of a bloated `CLAUDE.md` into `kb/` |
 | `.claude/agents/` | KB subagents (`kb-maintainer` / `kb-verify` / `kb-slim`); the prompts auto-create these in any target repo |
+| `tools/kb-check.sh` | Drift checker — every `path:line` resolves (file + line in range); `--freshness` flags git-stale notes; the prompts auto-create it in any target repo |
+| `tools/hooks/pre-commit` | Sample opt-in hook that runs the checker to gate commits |
 | `LICENSE:1` | MIT |
 | `kb/` | KB for *this* meta-repo (created by init) |
 
@@ -21,6 +23,7 @@ User pastes prompt.md
   → writes kb/{overview,architecture,about-kb,about-you,features/*,conventions,glossary}.md
   → adds a LEAN ## Knowledge Base section to target CLAUDE.md (triggers + map + pointer to kb/about-kb.md)
   → writes .claude/agents/{kb-maintainer,kb-verify,kb-slim}.md (auto-delegating KB subagents)
+  → writes tools/kb-check.sh + tools/hooks/pre-commit (drift checker + sample hook)
   → future sessions read kb/ first; full maintain rules in kb/about-kb.md; AUTO-MAINTAIN on code changes (often via the kb-maintainer agent)
 ```
 

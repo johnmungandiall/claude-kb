@@ -1,5 +1,11 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-27 — v2.8:** actually SHIP the automation — the prompts now auto-create
+  `tools/kb-check.sh` AND a sample `tools/hooks/pre-commit` in any target repo
+  (`prompt.md` STEP 7, `update.md` step 8), so the checker the rules reference really
+  exists everywhere, not just in docs. about-kb wording corrected ("created by the
+  setup", not "claude-kb ships"). Reported by John (audit found the script promised
+  but missing in target repos).
 - **2026-06-27 — v2.7:** shift KB maintenance from discipline to AUTOMATION — new
   `tools/kb-check.sh` resolves every `path:line` pointer (file exists + line in
   range) and, with `--freshness`, flags notes older than the code they cite (git).

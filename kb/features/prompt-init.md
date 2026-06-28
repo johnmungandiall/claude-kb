@@ -13,9 +13,10 @@
 | `26-37` | STEPS §3 | KB file tree to create (incl. about-you/about-kb/gotchas/changelog/cheatsheet) |
 | `38-101` | STEPS §4 | Create `kb/about-kb.md` — FULL KB rules template (+ sub-agents, How-to-work, Pointers&freshness) |
 | `102-141` | STEPS §5 | LEAN `## Knowledge Base` block + SLIM/migrate other `CLAUDE.md` reference content into `kb/` |
-| `142-161` | STEPS §6 | Create `.claude/agents/` KB subagents (see [[kb-agents]]) |
-| `162-183` | RULES | ≤50 lines/file (split if bigger), full-path `path:line` + `(checked <date>)`, `[[cross-link]]`, no secrets, lean CLAUDE.md |
-| `184-185` | OUTPUT | List what changed |
+| `142-160` | STEPS §6 | Create `.claude/agents/` KB subagents (see [[kb-agents]]) |
+| `161-210` | STEPS §7 | Create `tools/kb-check.sh` + sample `tools/hooks/pre-commit` (the drift checker) |
+| `211-232` | RULES | ≤50 lines/file (split if bigger), full-path `path:line` + `(checked <date>)`, `[[cross-link]]`, no secrets, lean CLAUDE.md |
+| `233-234` | OUTPUT | List what changed |
 
 ## CLAUDE.md wiring (target)
 

@@ -231,9 +231,9 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
      anchor, the line is a hint that may drift — grep the name if the line is off.
    - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a
      one-line `last indexed: <date>` and nothing more — don't duplicate history.
-   - Don't rely on discipline — run a pointer checker (claude-kb ships
-     `tools/kb-check.sh`: resolves every pointer, `--freshness` flags notes older
-     than the code) on a pre-commit hook or before release.
+   - Don't rely on discipline — run `tools/kb-check.sh` (created by the claude-kb
+     setup: resolves every pointer; `--freshness` flags notes older than the code)
+     via the sample `tools/hooks/pre-commit` or before release.
 
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
@@ -296,6 +296,55 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    These let the main thread DELEGATE heavy KB work instead of doing it inline.
    Give each agent body the same "How to work" discipline: think first, make the
    simplest surgical change, and verify before finishing.
+7. Create the drift checker the rules above reference, so "don't rely on
+   discipline" is actually enforceable, not just documented. Write
+   `tools/kb-check.sh` with exactly this content:
+
+```bash
+#!/usr/bin/env bash
+# kb-check.sh — fail if any kb/ `path:line` pointer no longer resolves (file
+# exists + line in range). With --freshness, also flag notes older than the code
+# they cite (git). Deps: git-bash builtins only. Run from the repo root:
+#   bash tools/kb-check.sh [--freshness]
+set -u
+kb="kb"; [ -d "$kb" ] || { echo "run from the repo root (no kb/ here)"; exit 0; }
+re='`[A-Za-z0-9_./-]+\.[A-Za-z0-9_]+:[0-9]+'   # `full/path.ext:line` (range :a-b matches a)
+bad=0
+while IFS= read -r h; do
+  note="${h%%:*}"; m="${h#*:}"; m="${m#*:}"; p="${m#\`}"
+  f="${p%:*}"; n="${p##*:}"
+  if [ ! -f "$f" ]; then
+    echo "  x $note -> \`$p\`  (no such file — use a full path from the repo root)"; bad=$((bad + 1))
+  else
+    t=$(wc -l < "$f" | tr -d ' '); [ "$n" -le "$t" ] || { echo "  x $note -> \`$p\`  (file has $t lines)"; bad=$((bad + 1)); }
+  fi
+done < <(grep -rnoE "$re" "$kb" 2>/dev/null)
+if [ "${1:-}" = "--freshness" ]; then
+  find "$kb" -name '*.md' | while IFS= read -r note; do
+    nt=$(git log -1 --format=%ct -- "$note" 2>/dev/null) || continue; [ -n "$nt" ] || continue
+    grep -oE "$re" "$note" 2>/dev/null | sed -e 's/^`//' -e 's/:[0-9]*$//' | sort -u | while IFS= read -r f; do
+      [ -f "$f" ] || continue; ct=$(git log -1 --format=%ct -- "$f" 2>/dev/null); [ -n "$ct" ] || continue
+      [ "$ct" -gt "$nt" ] && echo "  ~ $note  (points to newer $f — re-check)"
+    done
+  done
+fi
+[ "$bad" -eq 0 ] && { echo "kb-check: OK — all pointers resolve."; exit 0; }
+echo "kb-check: $bad broken pointer(s)."; exit 1
+```
+
+   and a sample hook at `tools/hooks/pre-commit`:
+
+```bash
+#!/usr/bin/env bash
+# claude-kb sample pre-commit hook — block the commit if any KB pointer is broken.
+# Install (pick one):
+#   cp tools/hooks/pre-commit .git/hooks/pre-commit   # copy it in
+#   git config core.hooksPath tools/hooks             # or point git at this dir
+exec bash tools/kb-check.sh
+```
+
+   Then run `bash tools/kb-check.sh` once to confirm the KB's pointers resolve,
+   and tell the user how to install the hook (it is opt-in).
 
 # RULES — keep it SMALL, DYNAMIC, ADVANCED
 - ACCURACY over speed: every claim and every `path:line` must come from code you
@@ -395,9 +444,9 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
      anchor, the line is a hint that may drift — grep the name if the line is off.
    - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a
      one-line `last indexed: <date>` and nothing more — don't duplicate history.
-   - Don't rely on discipline — run a pointer checker (claude-kb ships
-     `tools/kb-check.sh`: resolves every pointer, `--freshness` flags notes older
-     than the code) on a pre-commit hook or before release.
+   - Don't rely on discipline — run `tools/kb-check.sh` (created by the claude-kb
+     setup: resolves every pointer; `--freshness` flags notes older than the code)
+     via the sample `tools/hooks/pre-commit` or before release.
 
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
@@ -463,7 +512,57 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
    `CLAUDE.md` — the `slim.md` workflow). Leave any that already exist untouched.
    Give each agent body the same "How to work" discipline: think first, make the
    simplest surgical change, and verify before finishing.
-8. Bump the "last indexed" marker in `kb/overview.md`.
+8. Create `tools/kb-check.sh` and a sample `tools/hooks/pre-commit` if missing —
+   the drift checker the rules reference, so the KB is verified by a script, not by
+   memory (older setups never got these). Write `tools/kb-check.sh` with exactly
+   this content:
+
+```bash
+#!/usr/bin/env bash
+# kb-check.sh — fail if any kb/ `path:line` pointer no longer resolves (file
+# exists + line in range). With --freshness, also flag notes older than the code
+# they cite (git). Deps: git-bash builtins only. Run from the repo root:
+#   bash tools/kb-check.sh [--freshness]
+set -u
+kb="kb"; [ -d "$kb" ] || { echo "run from the repo root (no kb/ here)"; exit 0; }
+re='`[A-Za-z0-9_./-]+\.[A-Za-z0-9_]+:[0-9]+'   # `full/path.ext:line` (range :a-b matches a)
+bad=0
+while IFS= read -r h; do
+  note="${h%%:*}"; m="${h#*:}"; m="${m#*:}"; p="${m#\`}"
+  f="${p%:*}"; n="${p##*:}"
+  if [ ! -f "$f" ]; then
+    echo "  x $note -> \`$p\`  (no such file — use a full path from the repo root)"; bad=$((bad + 1))
+  else
+    t=$(wc -l < "$f" | tr -d ' '); [ "$n" -le "$t" ] || { echo "  x $note -> \`$p\`  (file has $t lines)"; bad=$((bad + 1)); }
+  fi
+done < <(grep -rnoE "$re" "$kb" 2>/dev/null)
+if [ "${1:-}" = "--freshness" ]; then
+  find "$kb" -name '*.md' | while IFS= read -r note; do
+    nt=$(git log -1 --format=%ct -- "$note" 2>/dev/null) || continue; [ -n "$nt" ] || continue
+    grep -oE "$re" "$note" 2>/dev/null | sed -e 's/^`//' -e 's/:[0-9]*$//' | sort -u | while IFS= read -r f; do
+      [ -f "$f" ] || continue; ct=$(git log -1 --format=%ct -- "$f" 2>/dev/null); [ -n "$ct" ] || continue
+      [ "$ct" -gt "$nt" ] && echo "  ~ $note  (points to newer $f — re-check)"
+    done
+  done
+fi
+[ "$bad" -eq 0 ] && { echo "kb-check: OK — all pointers resolve."; exit 0; }
+echo "kb-check: $bad broken pointer(s)."; exit 1
+```
+
+   and `tools/hooks/pre-commit`:
+
+```bash
+#!/usr/bin/env bash
+# claude-kb sample pre-commit hook — block the commit if any KB pointer is broken.
+# Install (pick one):
+#   cp tools/hooks/pre-commit .git/hooks/pre-commit   # copy it in
+#   git config core.hooksPath tools/hooks             # or point git at this dir
+exec bash tools/kb-check.sh
+```
+
+   Run `bash tools/kb-check.sh` once to confirm pointers resolve; tell the user how
+   to install the hook (it is opt-in).
+9. Bump the "last indexed" marker in `kb/overview.md`.
 
 # RULES
 - Incremental ONLY: do not regenerate unchanged KB files.

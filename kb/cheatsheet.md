@@ -17,6 +17,7 @@
 ```bash
 bash tools/kb-check.sh              # every path:line pointer resolves? (exit 1 if not)
 bash tools/kb-check.sh --freshness  # also flag notes older than the code they cite
+cp tools/hooks/pre-commit .git/hooks/pre-commit   # install the opt-in commit gate
 ```
 
 ## README ↔ prompt sync check (run after editing any prompt)
