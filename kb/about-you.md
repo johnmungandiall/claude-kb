@@ -15,5 +15,6 @@ Tag each item [confirmed] (user said/approved) or [inferred] (a guess; promote o
 
 ## Decisions & rules
 - Keep README's embedded prompts in sync with `prompt.md` / `update.md`. [confirmed]
+- Prefers AUTOMATION/verification over relying on discipline or memory — wants checks (scripts/hooks) that catch mistakes, not just written rules. [confirmed]
 
 See [[conventions]] for note rules, [[overview]] for what this repo is.

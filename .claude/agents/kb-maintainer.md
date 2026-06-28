@@ -17,8 +17,8 @@ When invoked after a code/config change:
 2. Identify which `kb/` note(s) describe the changed code — `kb/architecture.md`,
    the matching `kb/features/<name>.md`, `kb/conventions.md`, `kb/gotchas.md`, etc.
 3. Update ONLY those notes to match what the code now does. Verify every
-   `path:line` by OPENING the file — never guess. A new major feature → add a new
-   `kb/features/<name>.md`.
+   `path:line` by OPENING the file (write it as a full path from the repo root) —
+   never guess. A new major feature → add a new `kb/features/<name>.md`.
 4. Refresh the "last indexed" marker in `kb/overview.md`; append a dated one-line
    entry to `kb/changelog.md`. Change the KB map in `CLAUDE.md` ONLY when a `kb/`
    file is added or removed.

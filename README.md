@@ -56,6 +56,13 @@ flowchart LR
 | **Staying current** | You re-explain the project | Notes auto-update when code changes |
 | **Setup** | — | One paste · any language |
 
+## What's new in v2.7
+
+- **Drift is caught by a script, not by memory** — `tools/kb-check.sh` verifies
+  every `path:line` pointer resolves (and `--freshness` flags notes older than the
+  code they cite). Pointers are now a checkable full path from the repo root, and
+  release history lives in one place (`kb/changelog.md`). `verify.md` runs it first.
+
 ## What's new in v2.6
 
 - **The KB builds its own agents** — setup now auto-creates Claude Code subagents
@@ -217,6 +224,17 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
      creates, and flag (don't delete) other dead code.
    - GOAL-DRIVEN: turn the task into a concrete check and loop until it verifies.
 
+   ## Pointers & freshness
+   - A code pointer is ALWAYS a full path from the repo root + `:line` (e.g.
+     `lib/foo/bar.dart:42`) — never a bare filename or stray punctuation, so a
+     script can verify it. Name the function/class too: the NAME is the durable
+     anchor, the line is a hint that may drift — grep the name if the line is off.
+   - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a
+     one-line `last indexed: <date>` and nothing more — don't duplicate history.
+   - Don't rely on discipline — run a pointer checker (claude-kb ships
+     `tools/kb-check.sh`: resolves every pointer, `--freshness` flags notes older
+     than the code) on a pre-commit hook or before release.
+
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
 5. Update `CLAUDE.md` at the repo root (create it if missing), and SLIM it — it
@@ -370,6 +388,17 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
      creates, and flag (don't delete) other dead code.
    - GOAL-DRIVEN: turn the task into a concrete check and loop until it verifies.
 
+   ## Pointers & freshness
+   - A code pointer is ALWAYS a full path from the repo root + `:line` (e.g.
+     `lib/foo/bar.dart:42`) — never a bare filename or stray punctuation, so a
+     script can verify it. Name the function/class too: the NAME is the durable
+     anchor, the line is a hint that may drift — grep the name if the line is off.
+   - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a
+     one-line `last indexed: <date>` and nothing more — don't duplicate history.
+   - Don't rely on discipline — run a pointer checker (claude-kb ships
+     `tools/kb-check.sh`: resolves every pointer, `--freshness` flags notes older
+     than the code) on a pre-commit hook or before release.
+
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
 2. Open `CLAUDE.md` and SLIM it to a LEAN pointer (it loads every session). First,
@@ -460,11 +489,15 @@ where the `kb/` notes no longer match the code. Do NOT rebuild the KB and do NOT
 make large rewrites. Find mismatches, fix the cheap ones, and report the rest.
 
 # WHAT TO DO
-1. Read every `kb/` note. For each concrete claim — especially `path:line`
-   references — open the referenced file and confirm it still says what the note
-   claims. A note written from a stale guess is the #1 problem; verify, don't assume.
+1. If `tools/kb-check.sh` exists, RUN it first (`bash tools/kb-check.sh --freshness`)
+   — it auto-flags every pointer that no longer resolves and every note older than
+   the code it points to; start from its output. Then read every `kb/` note. For
+   each concrete claim — especially `path:line` references — open the referenced
+   file and confirm it still says what the note claims. A note written from a stale
+   guess is the #1 problem; verify, don't assume.
 2. Classify each finding:
-   - STALE `path:line` — the line moved or the file/function no longer exists.
+   - STALE `path:line` — the line moved or the file/function no longer exists; a
+     bare filename or non-resolving pointer is STALE (pointers = full path from root).
    - WRONG claim — the note describes behavior the code no longer has.
    - MISSING — a major feature/module/sub-project has no note.
    - ORPHAN — a note describes code that was deleted.
@@ -481,6 +514,7 @@ make large rewrites. Find mismatches, fix the cheap ones, and report the rest.
 - Incremental ONLY — no full regeneration, no restructuring.
 - Keep each note ≤ 50 lines and a pointer-style map, not a code copy.
 - Never invent files, functions, or line numbers to make a note "look" current.
+- Pointers are a full path from the repo root + `:line`; fix any that aren't.
 
 # OUTPUT
 Print two short lists: FIXED (what you changed) and NEEDS-CONFIRMATION (drift you
@@ -590,6 +624,20 @@ Print the `CLAUDE.md` size before vs after (lines), a short list mapping each mo
 section → its new `kb/` note, and — if you stopped early — which sections are DONE
 and which REMAIN. Report in the user's working language.
 ````
+
+## Keeping the KB honest (drift check)
+
+The KB's promise is that pointers stay accurate. Don't leave that to discipline —
+[tools/kb-check.sh](tools/kb-check.sh) checks it for you. It's an optional,
+dependency-light helper (pure git-bash — the prompts themselves stay Markdown-only):
+
+```bash
+bash tools/kb-check.sh              # every `path:line` resolves? exits 1 if not
+bash tools/kb-check.sh --freshness  # also flag notes older than the code they cite (git)
+```
+
+Wire it into a pre-commit hook or your pre-release checklist so broken pointers
+fail loudly. `verify.md` (and the `kb-verify` agent) run it first when auditing.
 
 ## License
 

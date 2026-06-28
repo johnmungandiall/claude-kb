@@ -4,11 +4,15 @@ where the `kb/` notes no longer match the code. Do NOT rebuild the KB and do NOT
 make large rewrites. Find mismatches, fix the cheap ones, and report the rest.
 
 # WHAT TO DO
-1. Read every `kb/` note. For each concrete claim — especially `path:line`
-   references — open the referenced file and confirm it still says what the note
-   claims. A note written from a stale guess is the #1 problem; verify, don't assume.
+1. If `tools/kb-check.sh` exists, RUN it first (`bash tools/kb-check.sh --freshness`)
+   — it auto-flags every pointer that no longer resolves and every note older than
+   the code it points to; start from its output. Then read every `kb/` note. For
+   each concrete claim — especially `path:line` references — open the referenced
+   file and confirm it still says what the note claims. A note written from a stale
+   guess is the #1 problem; verify, don't assume.
 2. Classify each finding:
-   - STALE `path:line` — the line moved or the file/function no longer exists.
+   - STALE `path:line` — the line moved or the file/function no longer exists; a
+     bare filename or non-resolving pointer is STALE (pointers = full path from root).
    - WRONG claim — the note describes behavior the code no longer has.
    - MISSING — a major feature/module/sub-project has no note.
    - ORPHAN — a note describes code that was deleted.
@@ -25,6 +29,7 @@ make large rewrites. Find mismatches, fix the cheap ones, and report the rest.
 - Incremental ONLY — no full regeneration, no restructuring.
 - Keep each note ≤ 50 lines and a pointer-style map, not a code copy.
 - Never invent files, functions, or line numbers to make a note "look" current.
+- Pointers are a full path from the repo root + `:line`; fix any that aren't.
 
 # OUTPUT
 Print two short lists: FIXED (what you changed) and NEEDS-CONFIRMATION (drift you

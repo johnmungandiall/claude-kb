@@ -55,6 +55,17 @@ NOT rebuild them from scratch. Make ONLY the incremental changes below.
      creates, and flag (don't delete) other dead code.
    - GOAL-DRIVEN: turn the task into a concrete check and loop until it verifies.
 
+   ## Pointers & freshness
+   - A code pointer is ALWAYS a full path from the repo root + `:line` (e.g.
+     `lib/foo/bar.dart:42`) — never a bare filename or stray punctuation, so a
+     script can verify it. Name the function/class too: the NAME is the durable
+     anchor, the line is a hint that may drift — grep the name if the line is off.
+   - Release history lives ONLY in `kb/changelog.md`; `kb/overview.md` keeps a
+     one-line `last indexed: <date>` and nothing more — don't duplicate history.
+   - Don't rely on discipline — run a pointer checker (claude-kb ships
+     `tools/kb-check.sh`: resolves every pointer, `--freshness` flags notes older
+     than the code) on a pre-commit hook or before release.
+
    See [[conventions]] for note-writing rules, [[overview]] for the big picture.
    ```
 2. Open `CLAUDE.md` and SLIM it to a LEAN pointer (it loads every session). First,

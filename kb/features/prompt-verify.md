@@ -8,14 +8,14 @@
 
 | Step | Source | Action |
 |------|--------|--------|
-| 1 | `verify.md:7-9` | Read every note; open each referenced file to confirm the claim |
-| 2 | `verify.md:10-15` | Classify drift: STALE / WRONG / MISSING / ORPHAN / BROKEN link |
-| 3 | `verify.md:16-19` | Auto-fix cheap drift; leave bigger reworks for user confirmation |
-| 4 | `verify.md:20-21` | Append `kb/changelog.md` entry; bump "last indexed" |
+| 1 | `verify.md:7-12` | Run `tools/kb-check.sh` first, then read every note; open each referenced file to confirm the claim |
+| 2 | `verify.md:13-19` | Classify drift: STALE / WRONG / MISSING / ORPHAN / BROKEN link |
+| 3 | `verify.md:20-23` | Auto-fix cheap drift; leave bigger reworks for user confirmation |
+| 4 | `verify.md:24-25` | Append `kb/changelog.md` entry; bump "last indexed" |
 
 ## Rules
 
-- Verify before touching; incremental only; never invent line numbers (`verify.md:23-27`).
-- Output is two lists: FIXED and NEEDS-CONFIRMATION (`verify.md:29-31`).
+- Verify before touching; incremental only; never invent line numbers; pointers = full path from root (`verify.md:27-33`).
+- Output is two lists: FIXED and NEEDS-CONFIRMATION (`verify.md:34-36`).
 
 Contrast with [[prompt-init]] (full build) and [[prompt-update]] (spec upgrade); note rules in [[conventions]].

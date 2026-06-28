@@ -21,7 +21,9 @@ Change the KB map below ONLY when you add or remove a `kb/` file, and then
 only that one line; routine code fixes must NOT modify CLAUDE.md.
 New major feature → add `kb/features/<name>.md`. Refresh the "last indexed"
 marker in `kb/overview.md`. Never let code and KB drift apart. Append a dated
-one-line entry to `kb/changelog.md` for notable changes.
+one-line entry to `kb/changelog.md` for notable changes. Before ending such a
+session, run `bash tools/kb-check.sh` — every `path:line` must resolve; it's the
+automated drift gate, so don't rely on memory.
 
 SUB-AGENTS & SKILLS: the KB is the shared map for EVERY agent, not just this
 session. When you dispatch a sub-agent (Task/Agent) or run a skill/workflow

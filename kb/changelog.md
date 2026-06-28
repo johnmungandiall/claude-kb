@@ -1,5 +1,12 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-27 — v2.7:** shift KB maintenance from discipline to AUTOMATION — new
+  `tools/kb-check.sh` resolves every `path:line` pointer (file exists + line in
+  range) and, with `--freshness`, flags notes older than the code they cite (git).
+  New rules: pointers are a FULL path from repo root + `:line` (script-checkable),
+  the function/class NAME is the durable anchor (line is a hint), and release
+  history lives ONLY in `kb/changelog.md` (`overview.md` keeps a one-line
+  last-indexed). `verify.md` + the `kb-verify` agent now run the checker first.
 - **2026-06-27 — v2.6:** the prompts now AUTO-CREATE KB subagents under
   `.claude/agents/` (`kb-maintainer`, `kb-verify`, `kb-slim`) so the KB maintains
   ITSELF via auto-delegating agents in their own context window. `prompt.md` STEP 6
