@@ -53,6 +53,13 @@ flowchart LR
 | **Staying current** | You re-explain the project | Notes auto-update when code changes |
 | **Setup** | — | One paste · any language |
 
+## In our testing
+
+Same model — the `kb/` map just lets Claude walk in already knowing your project.
+In practice that meant sessions oriented in seconds instead of re-scanning the
+repo, spent noticeably fewer tokens getting up to speed, and gave more consistent
+answers from one session to the next. Sharper context, not a different brain.
+
 ## Get started
 
 Open your repo in Claude Code and paste one prompt. No install, no dependencies.
