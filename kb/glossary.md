@@ -15,3 +15,5 @@
 | **Drift** | KB notes no longer matching the code (stale `path:line`, wrong claim, orphan, broken `[[link]]`) |
 | **gotchas / changelog / cheatsheet** | Optional notes: repo traps, dated KB history, one-page command reference |
 | **(checked &lt;date&gt;)** | Freshness marker on a volatile `path:line` so staleness is visible |
+| **Lockstep set** | A value/name/contract duplicated in >1 place (version strings, a mirrored enum, a dup'd allowlist); edit one → update all + record as a KB invariant. See [[edit-a-prompt]] |
+| **Runbook** | `kb/runbooks/<name>.md` — ordered list of EVERY file/step/artifact a multi-step procedure (release, deploy, secret rotation) must touch |

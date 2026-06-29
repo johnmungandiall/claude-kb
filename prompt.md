@@ -35,6 +35,7 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    - `kb/gotchas.md`       — known traps / footguns / "do NOT do X" (only if any exist)
    - `kb/changelog.md`     — dated one-line history of notable KB changes
    - `kb/cheatsheet.md`    — one-page run/build/test commands + key entry points
+   - `kb/runbooks/<name>.md`— one per multi-step procedure (release, deploy, secret rotation, onboarding): EVERY file/step/artifact to touch, in order — not just build commands (only if any exist)
 4. Create `kb/about-kb.md` — the FULL KB rules. `CLAUDE.md` will hold only short
    triggers and POINT here, so the detail loads on demand, not every session:
    ```
@@ -57,6 +58,25 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
      marker in `kb/overview.md`. Append a dated one-line entry to `kb/changelog.md`.
    - Edit the `kb/` FILES, not `CLAUDE.md` — it stays a stable pointer. Change the KB
      map in `CLAUDE.md` ONLY when a `kb/` file is added or removed.
+
+   ## No silent drift
+   - LOCKSTEP SETS: before calling a change done, ask whether the value/name/contract
+     you changed lives in MORE THAN ONE place — a version string, an enum mirrored by a
+     switch, an allowlist duplicated in build + runtime, a field set on the server and
+     parsed on the client, a default repeated in code + docs. Edit one member, then
+     search the repo for the OLD value: zero stale hits or you are not done. Record each
+     set as an explicit KB invariant ("change X → also change Y, Z, because …") and
+     cross-link every member's note.
+   - CENTRAL TRAPS: a trap you record inside a feature/module note MUST also get a
+     one-line stub + `[[gotchas]]` link in the central `kb/gotchas.md` index, or the
+     next person won't find it. Read `kb/gotchas.md` first when behavior surprises you.
+   - RUNBOOKS: a multi-step procedure (cutting a release, deploying, rotating a secret,
+     onboarding) needs a `kb/runbooks/<name>.md` listing EVERY file/step/artifact to
+     touch, in order — a build/run command list is NOT a runbook. Capture it the first
+     time you carry the procedure out.
+   - VISIBLE UPKEEP: end any turn that changed code/config with a status line — "KB:
+     updated <note(s)>" or "KB: no change needed because <reason>" — so the user never
+     has to ask whether the KB was updated.
 
    ## Sub-agents & skills
    - A dispatched sub-agent (Task/Agent) or skill/workflow starts cold. Pass it the
@@ -130,6 +150,10 @@ summarize, never copy code. Point to `path:line` instead of pasting code.
    - WHEN THE USER states/corrects a durable preference, goal, or rule: update
      `kb/about-you.md` the same session.
    - SUB-AGENTS & SKILLS: anything you dispatch starts cold — pass it these rules.
+   - NO DRIFT: changed a value/name/contract that lives in MORE THAN ONE place? update
+     every copy and search the old value to zero. A trap noted in a feature note also
+     gets a stub in `kb/gotchas.md`; a multi-step procedure gets a `kb/runbooks/` note.
+     End a code/config change with a "KB: updated <note>" / "no change needed" line.
 
    Map of the KB:
    - kb/overview.md — <1-line>
@@ -330,6 +354,11 @@ exec bash tools/kb-check.sh
 - One fact per place. CROSS-LINK every note to its related notes with `[[other-note]]`
   (e.g. a feature note links its `[[conventions]]` and `[[glossary]]`). A note with NO
   links is incomplete — the KB must be a navigable web, not a pile of isolated files.
+- NO SILENT DRIFT: capture cross-cutting invariants while you build. A "lockstep set"
+  (a value/name/contract repeated in >1 place: version strings, a mirrored enum, a
+  duplicated allowlist, a server field parsed client-side) gets a "change X → also Y, Z"
+  note cross-linked to each member; every feature-note trap is also stubbed into the
+  central `kb/gotchas.md`; every multi-step procedure gets a `kb/runbooks/<name>.md`.
 - Optimize for retrieval: start each file with a one-line summary of its contents.
 - CLAUDE.md stays a LEAN POINTER: short triggers + the KB map + a link to
   `kb/about-kb.md`, never a copy of the rules OR reference content — migrate any

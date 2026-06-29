@@ -14,7 +14,9 @@ Tag each item [confirmed] (user said/approved) or [inferred] (a guess; promote o
 - The KB should self-evolve by auto-creating its OWN Claude Code subagents (`.claude/agents/`) for KB upkeep. [confirmed]
 
 ## Decisions & rules
-- Keep README's embedded prompts in sync with `prompt.md` / `update.md`. [confirmed]
+- README only LINKS to the prompt files — no embedded copies (removed 2026-06-29 to kill the embed+sync drift). [confirmed]
 - Prefers AUTOMATION/verification over relying on discipline or memory — wants checks (scripts/hooks) that catch mistakes, not just written rules. [confirmed]
+- claude-kb must stay FULLY language/framework-agnostic — prompts & rules work for ALL languages and frameworks, never specialized to one (not Flutter-only). [confirmed]
+- End any code/config change with a visible "KB: updated <note>" / "no change needed" status line — never make the user ask. [confirmed]
 
 See [[conventions]] for note rules, [[overview]] for what this repo is.

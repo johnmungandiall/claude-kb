@@ -59,6 +59,10 @@ half-cut with notes half-written.
    - WHEN THE USER states/corrects a durable preference, goal, or rule: update
      `kb/about-you.md` the same session.
    - SUB-AGENTS & SKILLS: anything you dispatch starts cold — pass it these rules.
+   - NO DRIFT: changed a value/name/contract that lives in MORE THAN ONE place? update
+     every copy and search the old value to zero. A trap noted in a feature note also
+     gets a stub in `kb/gotchas.md`; a multi-step procedure gets a `kb/runbooks/` note.
+     End a code/config change with a "KB: updated <note>" / "no change needed" line.
 
    Map of the KB:
    - kb/overview.md — <1-line>

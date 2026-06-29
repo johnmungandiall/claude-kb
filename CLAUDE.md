@@ -52,12 +52,14 @@ Map of the KB:
 - kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit), prompt-slim (shrink a bloated CLAUDE.md), prompt-check (install the drift checker), kb-agents (the .claude/agents/ subagents)
 - kb/conventions.md, kb/glossary.md
 - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — repo traps, KB history, command cheatsheet
+- kb/runbooks/ — multi-step procedures (e.g. edit-a-prompt): every artifact to touch, in order
 
-## Editing the prompts (keep README in sync)
+## Editing the prompts (shared blocks stay in lockstep)
 
-`README.md` embeds the FULL text of `prompt.md`, `update.md`, `verify.md`,
-`slim.md`, and `check.md` in fenced (````markdown) blocks. If you edit any prompt file, mirror the same change
-into its matching README block in the SAME session, or the copies silently drift.
-Verify with the diff gate (extract each fenced block, `diff` it against the
-standalone file — they must be byte-identical). See `kb/conventions.md` for the
-note-writing rules.
+`README.md` only LINKS to the prompt files now — it does NOT embed them, so there
+is no README copy to keep in sync. But some blocks are still duplicated ACROSS the
+prompts: the `kb/about-kb.md` template (`prompt.md` + `update.md`), the lean
+`## Knowledge Base` block (`prompt.md` + `update.md` + `slim.md`), and
+`tools/kb-check.sh` (`prompt.md` + `update.md` + `check.md`). Edit one copy → update
+every copy in the SAME session. See `kb/runbooks/edit-a-prompt.md` for the full
+procedure and `kb/conventions.md` for the note-writing rules.

@@ -4,7 +4,7 @@
 
 | Path | Role |
 |------|------|
-| `README.md:1` | Human-facing docs; embeds full prompt text for copy-paste |
+| `README.md:1` | Human-facing docs; LINKS to the prompt files (no longer embeds them) |
 | `prompt.md:1` | Init prompt — investigate target code, write `kb/`, wire `CLAUDE.md` |
 | `update.md:1` | Upgrade prompt — incremental spec refresh, no full rebuild |
 | `verify.md:1` | Audit prompt — re-check `path:line` vs code, fix cheap drift |
@@ -38,4 +38,4 @@ User pastes prompt.md
 - `kb/features/<name>.md` — per major feature, `path:line` refs
 - `kb/conventions.md`, `kb/glossary.md`
 
-See `prompt.md:26-37` for the canonical file list. The five prompts are detailed in [[prompt-init]], [[prompt-update]], [[prompt-verify]], [[prompt-slim]], and [[prompt-check]]; the auto-created subagents in [[kb-agents]]; note-writing rules in [[conventions]].
+See `prompt.md:26-38` for the canonical file list. The five prompts are detailed in [[prompt-init]], [[prompt-update]], [[prompt-verify]], [[prompt-slim]], and [[prompt-check]]; the auto-created subagents in [[kb-agents]]; note-writing rules in [[conventions]].

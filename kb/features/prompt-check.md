@@ -2,7 +2,7 @@
 
 - **Purpose:** Install the drift checker in any repo — create `tools/kb-check.sh` + a sample `tools/hooks/pre-commit`, run it, and fix the pointers it flags. Focused, single-purpose.
 - **When:** A repo whose KB predates the checker (older claude-kb setup), or any repo that just wants the drift gate without a full init/update. Solves agents SKIPPING the tool step inside the big prompts.
-- **Also documented:** `README.md` "Drift-check prompt" section (embedded copy — keep byte-identical, see [[conventions]]).
+- **Linked from:** `README.md` links to `check.md` (no embedded copy).
 
 ## What it does
 

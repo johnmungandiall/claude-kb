@@ -2,7 +2,7 @@
 
 - **Purpose:** Audit an existing KB for DRIFT against the code — re-check every `path:line`, fix cheap mismatches, report the rest. No rebuild.
 - **When:** KB already exists and may be stale; user pastes `verify.md` (the third prompt, after `prompt.md` / `update.md`).
-- **Also documented:** `README.md` "Verify prompt" section (embedded copy — keep in sync).
+- **Linked from:** `README.md` links to `verify.md` (no embedded copy).
 
 ## What it does
 

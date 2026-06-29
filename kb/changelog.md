@@ -1,5 +1,28 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-29 — v2.15:** simplified `README.md` and KILLED the prompt↔README lockstep
+  set that keeps drifting (John's call). README no longer EMBEDS the five prompts —
+  it just LINKS to the files (`prompt.md` / `update.md` / `slim.md` / `verify.md` /
+  `check.md`) in a short "Get started" table; dropped every "What's new in vX" section
+  (history lives only here) and trimmed filler so it stays simple/engaging. Re-synced
+  the whole KB to the removal: `architecture`, `conventions`, `gotchas` (dropped the
+  README-mirror traps; lockstep list now = about-kb template / lean block / embedded
+  `kb-check.sh` / overview↔changelog), `cheatsheet` (removed the diff-gate + regen
+  commands), `about-you`, all five `features/*`, `runbooks/edit-a-prompt`, and
+  `CLAUDE.md`. See [[edit-a-prompt]], [[gotchas]].
+- **2026-06-29 — v2.14:** bake anti-drift rules into the prompts (reported by John from
+  real KB usage on a Flutter app where the version split across 3 files → wrong build),
+  kept language/framework-agnostic: (1) LOCKSTEP SETS — a value/name/contract repeated in
+  >1 place (version strings, a mirrored enum, a dup'd allowlist) must be edited everywhere
+  + recorded as a KB invariant; (2) CENTRAL TRAPS — a feature-note trap also gets a stub in
+  `kb/gotchas.md`; (3) RUNBOOKS — multi-step procedures get a `kb/runbooks/<name>.md` (every
+  artifact, in order); (4) VISIBLE UPKEEP — end a code/config change with a "KB: updated
+  <note>" status line. Added to the about-kb template + lean `## Knowledge Base` block +
+  `prompt.md` STEP 3 tree/RULES (all five README copies re-synced). ALSO fixed a real
+  lockstep drift this surfaced: README's embedded prompt blocks had been stale since v2.13
+  (the prose was never re-synced) — regenerated all five from the standalone files (diff
+  gate green) and added the regenerate command to [[cheatsheet]]. New
+  `kb/runbooks/edit-a-prompt.md`; feature-note line tables refreshed. See [[gotchas]], [[edit-a-prompt]].
 - **2026-06-28 — v2.13:** the checker is now SYMBOL-AWARE and can AUTO-FIX. Root
   cause (reported by John): the prior tool only saw backtick `path:line` and
   un-backticked `name():line`, so the dominant **name-anchored** style — `` `Name`:line ``

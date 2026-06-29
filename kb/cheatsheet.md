@@ -11,7 +11,7 @@
 - `prompt.md`, `update.md`, `verify.md`, `slim.md`, `check.md` — the prompts.
 - `.claude/agents/` — KB subagents (kb-maintainer/verify/slim), auto-created by the prompts.
 - `tools/kb-check.sh` — pointer/freshness drift checker.
-- `README.md` — human docs + verbatim copies of all four prompts.
+- `README.md` — human docs; links to the prompt files (does NOT embed them).
 - `kb/` — this repo's own dogfooded KB.
 
 ## KB drift check (run before release / on a pre-commit hook)
@@ -21,13 +21,4 @@ bash tools/kb-check.sh --freshness  # also flag notes older than the code they c
 cp tools/hooks/pre-commit .git/hooks/pre-commit   # install the opt-in commit gate
 ```
 
-## README ↔ prompt sync check (run after editing any prompt)
-```bash
-for n in 1:prompt.md 3:update.md 5:verify.md 7:slim.md 9:check.md; do
-  i=${n%%:*}; f=${n##*:}
-  diff <(awk -v b=$i '/^````/{c++; next} c==b' README.md | sed 's/\r$//') \
-       <(sed 's/\r$//' "$f") && echo "$f IN SYNC"
-done
-```
-
-See [[gotchas]] for traps, [[overview]] for what this repo is.
+See [[gotchas]] for traps, [[edit-a-prompt]] for the full edit runbook, [[overview]] for what this repo is.
