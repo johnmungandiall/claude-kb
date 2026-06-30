@@ -69,9 +69,9 @@ Open your repo in Claude Code and paste one prompt. No install, no dependencies.
 | **[prompt.md](prompt.md)** | **First time** — read the code, build `kb/`, wire `CLAUDE.md` |
 | [update.md](update.md) | Already set up — upgrade an existing KB to the latest rules |
 | [slim.md](slim.md) | Shrink a bloated `CLAUDE.md` into compact `kb/` notes |
-| [verify.md](verify.md) | Audit the KB for drift against the code |
 | [check.md](check.md) | Install the drift checker (`tools/kb-check.sh`) |
 | [hooks.md](hooks.md) | Install Claude Code hooks that auto-fire the KB upkeep + drift gate |
+| [verify.md](verify.md) | Audit the KB for drift against the code |
 
 New here? Start with **[prompt.md](prompt.md)** — that's the whole setup.
 
