@@ -1,5 +1,17 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-06-30 — v2.16:** added a standalone `hooks.md` prompt — a focused installer
+  that drops two Claude Code lifecycle hooks into any repo and wires `.claude/settings.json`
+  so the KB rules fire from the HARNESS, not just model discipline (requested by John):
+  (1) `kb_update_reminder.py` (PostToolUse) nudges once per session to update the matching
+  `kb/` note after a code/config edit; (2) `kb_drift_check.py` (Stop) runs
+  `tools/kb-check.sh` and blocks the stop ONCE on broken pointers. Generalized from John's
+  Qwantonomous-Engine hooks but kept FRAMEWORK-AGNOSTIC — the reminder uses a skip-list
+  (`kb/`, `.claude/`, `.git/`, `node_modules/`, top-level docs), NO hardcoded language
+  extensions. Scripts live embedded in `hooks.md` only (no dogfooded copy → no new lockstep
+  gate); standalone like `check.md`, not wired into init/update. New
+  `kb/features/prompt-hooks.md`; README "Get started" + `overview`/`architecture`/
+  `conventions`/`cheatsheet` re-synced to six prompts. See [[prompt-hooks]], [[gotchas]].
 - **2026-06-29 — v2.15:** simplified `README.md` and KILLED the prompt↔README lockstep
   set that keeps drifting (John's call). README no longer EMBEDS the five prompts —
   it just LINKS to the files (`prompt.md` / `update.md` / `slim.md` / `verify.md` /

@@ -7,6 +7,7 @@
 - **`verify.md`** — audit existing KB for drift vs code; fix cheap, report rest. See [[prompt-verify]].
 - **`slim.md`** — shrink a bloated `CLAUDE.md`; migrate reference content into `kb/`, leave pointers. See [[prompt-slim]].
 - **`check.md`** — install `tools/kb-check.sh` + sample hook in any repo (focused, can't-skip). See [[prompt-check]].
+- **`hooks.md`** — install Claude Code lifecycle hooks (`.claude/hooks/*.py` + `settings.json`) that auto-fire KB upkeep + the drift gate (focused). See [[prompt-hooks]].
 - **`README.md`** — human-facing intro; LINKS to the prompt files (no embedded copies to sync).
 - **`.claude/agents/`** — KB subagents the prompts auto-create (`kb-maintainer`, `kb-verify`, `kb-slim`); distilled, NOT byte-synced to the prompts (generated artifacts). See [[kb-agents]].
 

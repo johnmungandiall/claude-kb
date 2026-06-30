@@ -49,7 +49,7 @@ Map of the KB:
 - kb/overview.md — what claude-kb is, entry points, how to use
 - kb/architecture.md — repo layout and target-project KB data flow
 - kb/about-you.md — what the USER prefers: working style, tech, goals, rules
-- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit), prompt-slim (shrink a bloated CLAUDE.md), prompt-check (install the drift checker), kb-agents (the .claude/agents/ subagents)
+- kb/features/ — prompt-init (bootstrap), prompt-update (upgrade), prompt-verify (drift audit), prompt-slim (shrink a bloated CLAUDE.md), prompt-check (install the drift checker), prompt-hooks (install Claude Code lifecycle hooks), kb-agents (the .claude/agents/ subagents)
 - kb/conventions.md, kb/glossary.md
 - kb/gotchas.md, kb/changelog.md, kb/cheatsheet.md — repo traps, KB history, command cheatsheet
 - kb/runbooks/ — multi-step procedures (e.g. edit-a-prompt): every artifact to touch, in order

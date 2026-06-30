@@ -31,6 +31,13 @@
   `update.md` / `check.md` / `verify.md` all run `--fix` then a plain check (`broken 0`)
   before reporting done; `check.md` is the focused, can't-skip installer.
 
+- **Two different "hooks" now live here.** `check.md` installs a GIT hook
+  (`tools/hooks/pre-commit`); `hooks.md` installs CLAUDE CODE lifecycle hooks
+  (`.claude/hooks/*.py` wired in `.claude/settings.json`, PostToolUse + Stop). Different
+  mechanism, different files — don't conflate. `hooks.md`'s settings step MERGES into an
+  existing `.claude/settings.json` (never clobbers), and uses `python` (Windows) /
+  `python3` (Unix). See [[prompt-hooks]].
+
 - **These shared blocks are LOCKSTEP SETS.** Each duplicates ONE thing across files:
   the `about-kb` template (`prompt.md` + `update.md`), the lean `## Knowledge Base`
   block (`prompt.md` + `update.md` + `slim.md`), embedded `kb-check.sh` (`prompt.md`

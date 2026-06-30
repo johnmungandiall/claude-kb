@@ -1,14 +1,15 @@
 # Cheatsheet — how to use this repo (Markdown-only; no build/test/lint).
 
-## The five prompts (paste into Claude Code on a target repo)
+## The six prompts (paste into Claude Code on a target repo)
 - `prompt.md` — first-time KB bootstrap (no `kb/` yet).
 - `update.md` — upgrade an existing KB to the latest spec.
 - `verify.md` — audit an existing KB for drift vs the code.
 - `slim.md` — shrink a bloated `CLAUDE.md` (migrate reference content into `kb/`).
 - `check.md` — install `tools/kb-check.sh` + sample hook (focused, can't-skip).
+- `hooks.md` — install Claude Code lifecycle hooks (`.claude/hooks/*.py` + `settings.json`) that auto-fire KB upkeep + the drift gate.
 
 ## Entry points
-- `prompt.md`, `update.md`, `verify.md`, `slim.md`, `check.md` — the prompts.
+- `prompt.md`, `update.md`, `verify.md`, `slim.md`, `check.md`, `hooks.md` — the prompts.
 - `.claude/agents/` — KB subagents (kb-maintainer/verify/slim), auto-created by the prompts.
 - `tools/kb-check.sh` — pointer/freshness drift checker.
 - `README.md` — human docs; links to the prompt files (does NOT embed them).
