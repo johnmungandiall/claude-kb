@@ -7,6 +7,9 @@
   This is why `verify.md` exists.
 - **Unicode matters.** Files use `—` (em dash), `→`, `≤`. Preserve them as UTF-8;
   don't let an editor mangle them.
+- **Line endings: `.sh` must stay LF.** `.gitattributes` pins `*.sh` +
+  `tools/hooks/*` to `eol=lf` — without it, `core.autocrlf=true` on a fresh
+  Windows clone checks them out as CRLF and bash chokes on `\r`. Don't remove it.
 - **Shared blocks live in several prompts.** The lean `## Knowledge Base` block and
   the `kb/about-kb.md` template each live in `prompt.md` AND `update.md` (the lean
   block also in `slim.md`); the about-kb template is byte-identical across them. A
@@ -42,7 +45,11 @@
   the `about-kb` template (`prompt.md` + `update.md`), the lean `## Knowledge Base`
   block (`prompt.md` + `update.md` + `slim.md`), embedded `kb-check.sh` (`prompt.md`
   + `update.md` + `check.md`), and `overview` version ↔ `changelog`. Edit one copy
-  and the rest drift silently — follow [[edit-a-prompt]] and run `bash tools/kb-check.sh`
-  before declaring done.
+  and the rest drift silently — follow [[edit-a-prompt]], then run `bash
+  tools/lockstep-check.sh` (verifies all four sets mechanically; repo-internal, NOT
+  shipped/embedded — changing it triggers no lockstep) plus `bash tools/kb-check.sh`
+  before declaring done. If lockstep-check reports "extracted nothing", a block
+  MARKER moved (`# About the KB` / `## Knowledge Base (read FIRST` / first
+  ` ```bash ` fence) — fix the marker or the script, never ignore it.
 
 See [[conventions]] for the rules, [[edit-a-prompt]] for the edit runbook, [[overview]] for the big picture.

@@ -13,6 +13,7 @@
 | `hooks.md:1` | Hooks prompt — install Claude Code lifecycle hooks (`.claude/hooks/*.py` + `settings.json`) that auto-fire KB upkeep + the drift gate (focused) |
 | `.claude/agents/` | KB subagents (`kb-maintainer` / `kb-verify` / `kb-slim`); the prompts auto-create these in any target repo |
 | `tools/kb-check.sh` | Drift checker (symbol-aware) — resolves markdown-link & backtick-path pointers (broken = exit 1) and binds name-anchored `` `Name`:line `` to its file (same-line link / `(basename.ext)` hint / the note's first link), flagging STALE when the symbol left the cited line; `--fix` relocates a drifted line by the symbol's unique definition, `--freshness` flags git-stale notes; auto-created by the prompts |
+| `tools/lockstep-check.sh` | Repo-INTERNAL gate (not shipped, not embedded) — mechanically verifies the 4 lockstep sets (embedded `kb-check.sh` ×3, about-kb template ×2, lean KB block ×3, overview↔changelog version); wired into this repo's local `.git/hooks/pre-commit` |
 | `tools/hooks/pre-commit` | Sample opt-in hook that runs the checker to gate commits |
 | `LICENSE:1` | MIT |
 | `kb/` | KB for *this* meta-repo (created by init) |

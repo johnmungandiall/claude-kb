@@ -1,5 +1,27 @@
 # Changelog — dated one-line history of notable KB / prompt changes.
 
+- **2026-07-02 — v2.18:** DOGFOOD the v2.3 spec in THIS repo (gap reported by John):
+  `kb/about-kb.md` never existed here — the full KB rules sat inline in `CLAUDE.md`
+  (~80 lines) while `conventions`/`architecture`/`kb-maintainer` all described the
+  lean-pointer layout. Created `kb/about-kb.md` from the canonical `prompt.md`
+  template (+ a short "This repo" footer pointing at [[edit-a-prompt]] and
+  `tools/lockstep-check.sh`) and rewrote `CLAUDE.md` as the lean block: triggers +
+  map + pointer, ~40 lines. Prompts untouched; both checkers green. See [[about-kb]].
+  Also: new `.gitattributes` pins `*.sh` / `tools/hooks/*` to LF so a fresh Windows
+  clone (autocrlf) can't break the bash checkers. See [[gotchas]].
+- **2026-07-02 — v2.17:** the LOCKSTEP SETS are now machine-checked, not
+  discipline-checked (John's standing rule: automation over memory). New
+  `tools/lockstep-check.sh` — repo-internal, NOT shipped/embedded — verifies all
+  four sets mechanically: embedded `kb-check.sh` == `tools/kb-check.sh` in
+  `prompt.md`/`update.md`/`check.md`, about-kb template byte-identical in
+  `prompt.md`+`update.md`, lean `## Knowledge Base` block identical across
+  `prompt.md`/`update.md`/`slim.md` (modulo `update.md`'s `<keep existing …>`
+  placeholders), and `overview` version == newest `changelog` entry. Empty
+  extraction = hard error (no silent pass when a marker moves — the v2.9/v2.13
+  lesson). Verified: green on the current tree AND catches a seeded fault in each
+  of the four sets. Wired into this repo's local `.git/hooks/pre-commit` (runs
+  both checkers); shipped sample unchanged. Prompts untouched. See [[gotchas]],
+  [[edit-a-prompt]], [[cheatsheet]].
 - **2026-06-30 — v2.16:** added a standalone `hooks.md` prompt — a focused installer
   that drops two Claude Code lifecycle hooks into any repo and wires `.claude/settings.json`
   so the KB rules fire from the HARNESS, not just model discipline (requested by John):

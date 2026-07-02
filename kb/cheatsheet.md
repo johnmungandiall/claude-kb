@@ -19,7 +19,10 @@
 ```bash
 bash tools/kb-check.sh              # every path:line pointer resolves? (exit 1 if not)
 bash tools/kb-check.sh --freshness  # also flag notes older than the code they cite
+bash tools/lockstep-check.sh        # THIS repo only: the 4 duplicated prompt blocks still in sync?
 cp tools/hooks/pre-commit .git/hooks/pre-commit   # install the opt-in commit gate
 ```
+This repo's own `.git/hooks/pre-commit` runs BOTH checkers (re-wire it after a
+fresh clone — `.git/hooks` isn't versioned; the shipped sample runs only `kb-check.sh`).
 
 See [[gotchas]] for traps, [[edit-a-prompt]] for the full edit runbook, [[overview]] for what this repo is.
